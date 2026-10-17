@@ -14,6 +14,24 @@
 // Target email where updates will be sent (can be configured in Script Properties or updated here)
 const NOTIFICATION_EMAIL = PropertiesService.getScriptProperties().getProperty("NOTIFICATION_EMAIL") || "cfo-research-lead@institution.edu";
 
+// Optional: Target Google Sheet ID if using a standalone script (leave empty if script is inside the Sheet)
+const SPREADSHEET_ID = PropertiesService.getScriptProperties().getProperty("SPREADSHEET_ID") || "";
+
+/**
+ * Helper to get the target spreadsheet (either bound active spreadsheet or specified by ID)
+ */
+function getTargetSpreadsheet() {
+  const customId = PropertiesService.getScriptProperties().getProperty("SPREADSHEET_ID") || SPREADSHEET_ID;
+  if (customId && customId.trim()) {
+    try {
+      return SpreadsheetApp.openById(customId.trim());
+    } catch (e) {
+      Logger.log("Notice: Could not open SPREADSHEET_ID directly, falling back to active spreadsheet: " + e.toString());
+    }
+  }
+  return SpreadsheetApp.getActiveSpreadsheet();
+}
+
 // 15 Exact Rally Questions for Column Headers
 const RALLY_QUESTIONS = [
   "Q1: I am aware of my emotions as I experience them",
@@ -74,13 +92,13 @@ function doPost(e) {
     }
 
     const data = JSON.parse(e.postData.contents);
-    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    const ss = getTargetSpreadsheet();
 
     // 1. Update/Insert in "Players_Summary" (1 row per player)
     const summarySheet = getOrCreateSheet(ss, "Players_Summary", getSummaryHeaders(), "#141829", "#f2c14e");
     updatePlayerRow(summarySheet, data);
 
-    // 2. Update/Insert in "Poker_Responses" (1 row per player with 30 question columns)
+    // 2. Update/Insert in "Poker_Responses" (1 row per player with 10 question columns)
     if (data.poker && data.poker.responses && data.poker.responses.length > 0) {
       const pokerSheet = getOrCreateSheet(ss, "Poker_Responses", getPokerHeaders(), "#0f3b2a", "#6be3a4");
       updatePokerRow(pokerSheet, data);
@@ -95,10 +113,6 @@ function doPost(e) {
     // 4. Append to "Event_Log"
     const logSheet = getOrCreateSheet(ss, "Event_Log", getLogHeaders(), "#2a3050", "#eef0f7");
     appendLog(logSheet, data);
-
-    // NOTE: Per-signup/per-event emails are intentionally disabled to avoid inbox spam.
-    // All participant data is recorded in the sheets above.
-    // A single consolidated digest email is sent at the end of the day via sendDailySummaryEmail().
 
     return ContentService.createTextOutput(JSON.stringify({
       status: "success",
@@ -129,6 +143,14 @@ function getSummaryHeaders() {
     "Gender",
     "Status",
     "Nickname",
+    "Assigned Archetype",
+    "Risk Appetite (%)",
+    "Emotional Awareness (%)",
+    "Conviction (%)",
+    "Agile Decision (%)",
+    "Strategic Balance (%)",
+    "Consent Given",
+    "Is Guest",
     "Progress State",
     "Poker Completed",
     "Poker Chips",
@@ -143,7 +165,8 @@ function getSummaryHeaders() {
     "Rally CFO Score",
     "Rally EQ Score",
     "Crashes",
-    "Coins"
+    "Coins",
+    "Lead PDF Email"
   ];
 }
 
@@ -202,8 +225,8 @@ function getLogHeaders() {
 
 /**
  * Helper to get or create sheet with headers and formatting.
- * If the sheet exists but has outdated column headers (e.g. old 30-hand columns),
- * it wipes the old structure and responses, applying the new clean 10-hand structure.
+ * If the sheet exists but has outdated column headers,
+ * it wipes the old structure and responses, applying the new clean structure.
  */
 function getOrCreateSheet(ss, name, headers, bgColor, fontColor) {
   let sheet = ss.getSheetByName(name);
@@ -214,8 +237,7 @@ function getOrCreateSheet(ss, name, headers, bgColor, fontColor) {
   } else {
     const curCols = sheet.getLastColumn();
     if (curCols !== headers.length) {
-      // Column structure changed (e.g. from 30 questions to 10 questions)
-      // Wipe old outdated responses to prevent mismatched column alignments
+      // Column structure updated
       sheet.clear();
       sheet.appendRow(headers);
       formatHeaderRow(sheet, headers.length, bgColor, fontColor);
@@ -231,10 +253,50 @@ function formatHeaderRow(sheet, colCount, bgColor, fontColor) {
   headerRange.setFontWeight("bold");
   headerRange.setFontSize(10);
   headerRange.setWrap(true);
+  headerRange.setVerticalAlignment("middle");
+  sheet.setRowHeight(1, 42);
   sheet.setFrozenRows(1);
+  if (colCount >= 3) {
+    sheet.setFrozenColumns(2);
+  }
   for (let c = 1; c <= colCount; c++) {
     sheet.setColumnWidth(c, c <= 5 ? 140 : 220);
   }
+}
+
+/**
+ * ONE-CLICK SETUP FOR A NEW SPREADSHEET
+ * Open your new Google Sheet -> Extensions -> Apps Script -> Paste this code -> Select "setupNewSpreadsheet" -> Click Run!
+ * This instantly initializes all 4 sheets with the exact same styling, headers, frozen panes, and column widths.
+ */
+function setupNewSpreadsheet() {
+  const ss = getTargetSpreadsheet();
+  
+  // 1. Players Summary
+  const s1 = getOrCreateSheet(ss, "Players_Summary", getSummaryHeaders(), "#141829", "#f2c14e");
+  
+  // 2. Poker Responses (1 row per player, 10 hands)
+  const s2 = getOrCreateSheet(ss, "Poker_Responses", getPokerHeaders(), "#0f3b2a", "#6be3a4");
+  
+  // 3. Rally Responses (1 row per player, 15 questions)
+  const s3 = getOrCreateSheet(ss, "Rally_Responses", getRallyHeaders(), "#4a1d12", "#ff9f4a");
+  
+  // 4. Event Log
+  const s4 = getOrCreateSheet(ss, "Event_Log", getLogHeaders(), "#2a3050", "#eef0f7");
+  
+  // Remove default "Sheet1" if it exists and is empty
+  const defaultSheet = ss.getSheetByName("Sheet1");
+  if (defaultSheet && defaultSheet.getLastRow() === 0 && ss.getSheets().length > 1) {
+    try {
+      ss.deleteSheet(defaultSheet);
+    } catch(e) {}
+  }
+  
+  Logger.log("✅ Successfully initialized new Google Sheet with all 4 sheets:");
+  Logger.log("   1. Players_Summary (Navy/Gold)");
+  Logger.log("   2. Poker_Responses (Forest/Mint)");
+  Logger.log("   3. Rally_Responses (Ember/Orange)");
+  Logger.log("   4. Event_Log (Slate/White)");
 }
 
 /**
@@ -242,7 +304,7 @@ function formatHeaderRow(sheet, colCount, bgColor, fontColor) {
  * Can be run manually from Google Apps Script editor.
  */
 function resetPokerResponsesSheet() {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const ss = getTargetSpreadsheet();
   let sheet = ss.getSheetByName("Poker_Responses");
   if (sheet) {
     sheet.clear();
@@ -262,6 +324,8 @@ function updatePlayerRow(sheet, data) {
   const p = data.participant || {};
   const poker = data.poker || {};
   const rally = data.rally || {};
+  const ob = data.ob || (data.extra && data.extra.ob) || {};
+  const traits = ob.traits || {};
   const pId = p.id || "";
 
   const rowValues = [
@@ -274,6 +338,14 @@ function updatePlayerRow(sheet, data) {
     p.gender || "",
     p.status || "",
     p.nick || "",
+    ob.archetype || "",
+    traits.risk !== undefined ? traits.risk + "%" : "",
+    traits.eq !== undefined ? traits.eq + "%" : "",
+    traits.conv !== undefined ? traits.conv + "%" : "",
+    traits.agility !== undefined ? traits.agility + "%" : "",
+    traits.strat !== undefined ? traits.strat + "%" : "",
+    p.consent ? "Yes" : "Yes (Implicit)",
+    p.isGuest ? "Yes" : "No",
     data.eventType || "UPDATE",
     poker.completed ? "Yes" : "No",
     poker.chips !== undefined ? poker.chips : "",
@@ -288,7 +360,8 @@ function updatePlayerRow(sheet, data) {
     rally.cfoScore !== undefined ? rally.cfoScore : "",
     rally.eqScore !== undefined ? rally.eqScore : "",
     rally.crashes !== undefined ? rally.crashes : "",
-    rally.coins !== undefined ? rally.coins : ""
+    rally.coins !== undefined ? rally.coins : "",
+    data.extra && data.extra.leadEmail ? data.extra.leadEmail : (p.leadEmail || "")
   ];
 
   upsertRow(sheet, 2, pId, rowValues);
@@ -572,8 +645,9 @@ function sendEmailReport(data, sheetUrl) {
  * single consolidated executive summary email to NOTIFICATION_EMAIL.
  */
 function sendDailySummaryEmail() {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
-  const sheetUrl = ss.getUrl();
+  const ss = getTargetSpreadsheet();
+  let sheetUrl = "";
+  try { sheetUrl = ss.getUrl(); } catch(e) {}
   const summarySheet = ss.getSheetByName("Players_Summary");
   const tz = Session.getScriptTimeZone();
   const now = new Date();

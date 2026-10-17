@@ -519,6 +519,7 @@ function saveEndpointConfig(){
  */
 async function syncToCloud(eventType, extra = {}) {
   if (!P) return;
+  const obData = (typeof lastOBProfile !== 'undefined' && lastOBProfile) || (P.poker || P.rally ? computeOBProfile(P.poker, P.rally) : null);
   const payload = {
     eventType: eventType, // 'REGISTER', 'GUEST_START', 'POKER_COMPLETED', 'RALLY_COMPLETED', 'FINISHED', 'LEAD_CAPTURED'
     targetEmail: TARGET_EMAIL,
@@ -532,8 +533,15 @@ async function syncToCloud(eventType, extra = {}) {
       phone: P.phone || 'N/A',
       status: P.status || 'Working',
       nick: P.nick,
-      isGuest: !!P.isGuest
+      isGuest: !!P.isGuest,
+      consent: true,
+      leadEmail: (extra && extra.leadEmail) || P.leadEmail || ''
     },
+    ob: obData ? {
+      archetype: obData.archetype,
+      tagline: obData.tagline,
+      traits: obData.traits
+    } : null,
     poker: P.poker ? {
       completed: true,
       doneTime: P.poker.done,
@@ -1431,12 +1439,13 @@ function handleLeadCapture(e) {
   }
   if (P) {
     P.email = em;
+    P.leadEmail = em;
     try {
       localStorage.setItem('cfo_active_player', JSON.stringify(P));
       localStorage.setItem(KEY, JSON.stringify(DB));
     } catch(err) {}
   }
-  syncToCloud('LEAD_CAPTURED', { requestedEmail: em, archetype: lastOBProfile ? lastOBProfile.archetype : '' });
+  syncToCloud('LEAD_CAPTURED', { requestedEmail: em, leadEmail: em, archetype: lastOBProfile ? lastOBProfile.archetype : '' });
   const fb = $('leadFeedback');
   fb.textContent = `✓ Detailed OB Analysis PDF queued for delivery to ${em}!`;
   fb.style.display = 'block';

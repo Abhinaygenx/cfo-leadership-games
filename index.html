@@ -1418,8 +1418,13 @@ input:focus,select:focus{
 // Configuration & Research Endpoint
 let TARGET_EMAIL = localStorage.getItem('cfo_target_email') || '';
 const KEY = 'cfoSurveyDB';
-const DEFAULT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbw97qit3HKxEdaPgrET1n4V8I6PDCFmZxXl28h6i3YPWqf7H-ET9Jl3zV6NxgMOQhjGLw/exec';
+const OLD_ENDPOINT = 'https://script.google.com/macros/s/AKfycbw97qit3HKxEdaPgrET1n4V8I6PDCFmZxXl28h6i3YPWqf7H-ET9Jl3zV6NxgMOQhjGLw/exec';
+const DEFAULT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbycZM0R2Hn2SUHMaM9wUtgLjAh0nYFKeObK7YfAmCiFm6-_dAVQc_3yACOMFrHQL13X/exec';
 let ENDPOINT = localStorage.getItem('cfo_sheet_endpoint') || DEFAULT_ENDPOINT;
+if (ENDPOINT === OLD_ENDPOINT) {
+  ENDPOINT = DEFAULT_ENDPOINT;
+  localStorage.setItem('cfo_sheet_endpoint', DEFAULT_ENDPOINT);
+}
 
 const $=i=>document.getElementById(i);
 const v=i=>{const el=$(i);return el?el.value.trim():'';};

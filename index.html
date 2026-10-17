@@ -1441,6 +1441,9 @@ try{
   }
 }catch(e){}
 let P=null,cur='';
+try{
+  P=JSON.parse(localStorage.getItem('cfo_active_player')||'null');
+}catch(e){}
 
 function openSyncModal(){
   $('cfgEndpoint').value = ENDPOINT || DEFAULT_ENDPOINT;
@@ -1462,6 +1465,12 @@ function saveEndpointConfig(){
  * Anonymously records player data and assessment completion in the connected research backend
  */
 async function syncToCloud(eventType, extra = {}) {
+  if (!P) {
+    try {
+      P = JSON.parse(localStorage.getItem('cfo_active_player') || 'null');
+      if (!P && DB && DB.length) P = DB[DB.length - 1];
+    } catch(e) {}
+  }
   if (!P) return;
   const obData = (typeof lastOBProfile !== 'undefined' && lastOBProfile) || (P.poker || P.rally ? computeOBProfile(P.poker, P.rally) : null);
   const payload = {
@@ -1515,14 +1524,16 @@ async function syncToCloud(eventType, extra = {}) {
 
   if (ENDPOINT) {
     try {
+      console.log('Dispatching cloud sync (' + eventType + ') to:', ENDPOINT);
       await fetch(ENDPOINT, {
         method: 'POST',
         mode: 'no-cors',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify(payload)
       });
+      console.log('Cloud sync payload sent for:', eventType);
     } catch (err) {
-      console.warn('Background sync status: saved locally');
+      console.warn('Background sync status: saved locally', err);
     }
   }
 }
@@ -1736,6 +1747,12 @@ addEventListener('message', e=>{
     return;
   }
 
+  if(!P){
+    try{
+      P=JSON.parse(localStorage.getItem('cfo_active_player')||'null');
+      if(!P&&DB&&DB.length)P=DB[DB.length-1];
+    }catch(e){}
+  }
   if(m.type!='cfo-game'||!P)return;
   P[m.game]={done:new Date().toLocaleString(),data:m.data,chips:m.chips,x:m.x};
   try{

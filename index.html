@@ -5,20 +5,21 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>CFO Leadership Pulse</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
 :root{--bg:#0b0d16;--card:#141829;--ink:#eef0f7;--mute:#9aa1b8;--gold:#f2c14e;--red:#e5383b;--line:#2a3050;--green:#1f8a5b}
-*{box-sizing:border-box}html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
-body{background:radial-gradient(1200px 600px at 80% -10%,#3a1d1d55,transparent),radial-gradient(900px 500px at 0 100%,#13385a66,transparent),var(--bg)}
-.scr{display:none;min-height:100dvh;padding:max(20px,env(safe-area-inset-top)) 18px 28px;max-width:980px;margin:auto;animation:in .5s}.scr.on{display:block}
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;-webkit-text-size-adjust:100%}
+body{background:radial-gradient(1200px 600px at 80% -10%,#3a1d1d55,transparent),radial-gradient(900px 500px at 0 100%,#13385a66,transparent),var(--bg);touch-action:manipulation}
+.scr{display:none;min-height:100dvh;padding:max(16px,env(safe-area-inset-top)) 16px 28px;max-width:980px;margin:auto;animation:in .5s}.scr.on{display:block}
 @keyframes in{from{opacity:0;transform:translateY(10px)}}
-h1{font:800 clamp(2rem,6vw,3.4rem)/1.05 Georgia,serif;margin:.2em 0 .3em}h1 em{color:var(--gold);font-style:normal}h2{font:700 1.7rem Georgia,serif;margin:.2em 0}
+h1{font:800 clamp(1.8rem,5.5vw,3.2rem)/1.08 Georgia,serif;margin:.2em 0 .3em}h1 em{color:var(--gold);font-style:normal}h2{font:700 1.6rem Georgia,serif;margin:.2em 0}
 .k{letter-spacing:.2em;font-size:.72rem;color:var(--gold);text-transform:uppercase}.m{color:var(--mute)}
-.btn{display:inline-block;border:0;border-radius:14px;padding:14px 28px;font:700 1rem inherit;cursor:pointer;background:linear-gradient(#ffd66b,#f2a93e);color:#2a1a10;box-shadow:0 6px 24px #f2a93e44;touch-action:manipulation;transition:all .2s}
+.btn{display:inline-block;border:0;border-radius:14px;padding:14px 26px;font:700 1rem inherit;cursor:pointer;background:linear-gradient(#ffd66b,#f2a93e);color:#2a1a10;box-shadow:0 6px 24px #f2a93e44;touch-action:manipulation;transition:all .2s;text-align:center;text-decoration:none}
 .btn:hover{filter:brightness(1.05)}.btn.g{background:none;border:1px solid var(--line);color:var(--ink);box-shadow:none}.btn:disabled{opacity:.4}
-.hero{display:grid;gap:22px;grid-template-columns:1.2fr 1fr;align-items:center;margin-top:5vh}
+.hero{display:grid;gap:22px;grid-template-columns:1.2fr 1fr;align-items:center;margin-top:3vh}
 .duo{display:grid;grid-template-columns:1fr 1fr;gap:12px}.tile{border-radius:18px;padding:18px;border:1px solid var(--line);background:var(--card);min-height:150px;position:relative;overflow:hidden}
 .tile .i{font-size:2.4rem}.tile.p{background:linear-gradient(160deg,#0f3b2a,#141829)}.tile.r{background:linear-gradient(160deg,#4a1d12,#141829)}
-.facts{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}.facts span{border:1px solid var(--line);border-radius:99px;padding:5px 12px;font-size:.82rem;color:var(--mute)}
+.facts{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}.facts span{border:1px solid var(--line);border-radius:99px;padding:5px 12px;font-size:.82rem;color:var(--mute);background:#101426}
 .box{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;max-width:560px;margin:14px auto}
 label{display:block;font-size:.82rem;color:var(--mute);margin:12px 0 4px}input,select{width:100%;padding:13px 14px;border-radius:12px;border:1px solid var(--line);background:#0e1120;color:var(--ink);font:inherit}
 input:focus,select:focus{outline:2px solid var(--gold)}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
@@ -33,7 +34,7 @@ input:focus,select:focus{outline:2px solid var(--gold)}.row{display:grid;grid-te
 #gf{flex:1;border:0;width:100%;background:#000}
 #cin{position:fixed;inset:0;background:#000;z-index:9;display:none}#cin.on{display:block}#cv{width:100%;height:100%;display:block}#skip{position:absolute;right:16px;bottom:max(16px,env(safe-area-inset-bottom));background:#0008;color:#fff;border:1px solid #fff4;border-radius:99px;padding:8px 16px;cursor:pointer}
 .sum{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}.sum div{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}.sum b{display:block;font-size:1.6rem;color:var(--gold)}
-.foot{margin-top:30px;text-align:center;font-size:.78rem}.foot a{color:var(--gold);cursor:pointer;text-decoration:underline;margin:0 6px}
+.foot{margin-top:34px;text-align:center;font-size:.78rem;color:var(--mute);line-height:1.6}.foot a{color:var(--gold);cursor:pointer;text-decoration:underline;margin:0 6px}
 @media(max-width:700px){.hero,.games{grid-template-columns:1fr}.gc{min-height:200px}.row{grid-template-columns:1fr}}
 
 #bgfx{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}#bgfx i{position:absolute;bottom:-60px;font-style:normal;opacity:.1;animation:fl linear infinite}@keyframes fl{to{transform:translateY(-115vh) rotate(360deg)}}
@@ -49,7 +50,7 @@ input:focus,select:focus{outline:2px solid var(--gold)}.row{display:grid;grid-te
 .seg3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.seg3 label{margin:0}.seg3 input{display:none}.seg3 span{display:block;text-align:center;padding:12px 4px;border:1px solid var(--line);border-radius:14px;cursor:pointer;background:#0e1120;transition:.2s}.seg3 i{display:block;font-style:normal;font-size:1.5rem}
 .seg3 span:hover{transform:translateY(-2px)}.seg3 input:checked+span{background:linear-gradient(#ffd66b,#f2a93e);color:#2a1a10;font-weight:800;border-color:var(--gold);transform:translateY(-3px);box-shadow:0 8px 20px #f2a93e55}
 .shake{animation:shk .4s}@keyframes shk{20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
-#toast{position:fixed;top:max(12px,env(safe-area-inset-top));left:50%;transform:translate(-50%,-140%);z-index:20;background:#7a1a1a;border:1px solid #ff6b6b;color:#fff;padding:12px 40px 12px 16px;border-radius:14px;max-width:min(92vw,520px);box-shadow:0 10px 30px #000a;transition:.35s;font-size:.88rem}#toast.on{transform:translate(-50%,0)}#toast.info{background:#123226;border-color:#2a9d8f}#toast b{cursor:pointer;position:absolute;right:14px;top:10px}
+#toast{position:fixed;top:max(14px,env(safe-area-inset-top));left:50%;transform:translate(-50%,-140%);z-index:999;background:#151c30;border:1px solid var(--gold);color:#fff;padding:12px 38px 12px 18px;border-radius:14px;max-width:min(92vw,500px);box-shadow:0 12px 36px rgba(0,0,0,.7);transition:.35s cubic-bezier(.2,.8,.2,1);font-size:.88rem;display:flex;align-items:center;gap:10px}#toast.on{transform:translate(-50%,0)}#toast.info{background:#102820;border-color:#2a9d8f}#toast b{cursor:pointer;position:absolute;right:14px;top:10px;font-size:1rem;color:var(--mute)}
 .who{text-align:center;margin-bottom:6px}.who span{display:inline-block;border:1px solid var(--gold);color:var(--gold);padding:4px 14px;border-radius:99px;font-size:.8rem}
 .prog{display:flex;gap:8px;max-width:360px;margin:12px auto 0}.prog i{flex:1;height:8px;border-radius:9px;background:#252b45;overflow:hidden;position:relative}.prog i.f:after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#1f8a5b,#6be3a4)}
 .gc{padding-top:90px}.fan{position:absolute;top:22px;left:24px;height:70px;width:150px}.fan b{position:absolute;width:48px;height:68px;border-radius:8px;background:#fbf6e8;color:#15151c;font:800 1rem Georgia,serif;padding:5px;transition:.35s;box-shadow:0 6px 14px #000a}.fan b.rd{color:#c4232f}.fan b:nth-child(1){transform:rotate(-14deg)}.fan b:nth-child(2){left:36px}.fan b:nth-child(3){left:72px;transform:rotate(14deg)}.gc:hover .fan b:nth-child(1){transform:rotate(-26deg) translateX(-12px)}.gc:hover .fan b:nth-child(3){transform:rotate(26deg) translateX(12px)}
@@ -78,13 +79,96 @@ input:focus,select:focus{outline:2px solid var(--gold)}.row{display:grid;grid-te
 .car .txi{justify-content:center;font-size:4.6rem}.car .txi span{display:block;transform:scaleX(-1);filter:drop-shadow(0 6px 8px #000a)}
 #cin.fade{opacity:0;transition:opacity .4s}
 
-/* Cloud sync indicator & modal */
-.sync-bar{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:#141829;border:1px solid var(--line);border-radius:12px;margin-bottom:16px;font-size:.82rem}
-.sync-status{display:flex;align-items:center;gap:8px}
-.sync-dot{width:10px;height:10px;border-radius:50%;background:#e5a93e;display:inline-block}
-.sync-dot.synced{background:#2a9d8f;box-shadow:0 0 8px #2a9d8f}
-.sync-dot.syncing{background:#f2c14e;animation:pl 1s infinite}
-.sync-dot.err{background:#e63946}
+/* Executive Brand Header */
+.top-nav{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:rgba(20,24,41,0.6);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:14px;margin-bottom:18px}
+.brand-tag{display:flex;align-items:center;gap:10px}
+.brand-dot{width:9px;height:9px;border-radius:50%;background:#2a9d8f;box-shadow:0 0 10px #2a9d8f}
+.brand-title{font-weight:800;font-size:.9rem;letter-spacing:.08em;color:var(--ink)}
+.brand-sub{font-size:.72rem;color:var(--gold);padding:2px 8px;border-radius:99px;border:1px solid rgba(242,193,78,0.3);background:rgba(242,193,78,0.08)}
+.ghost-sm{padding:6px 14px;font-size:.78rem;border-radius:10px}
+
+/* Explanatory Blurb Badge */
+.blurb-badge{margin:12px 0 18px;padding:12px 18px;border-radius:12px;background:rgba(242,193,78,0.08);border-left:4px solid var(--gold);color:#e2e6f3;font-size:.9rem;line-height:1.45}
+
+/* Consent Box */
+.consent-box{margin:14px 0 6px;padding:12px 14px;border-radius:12px;background:#0d1120;border:1px solid var(--line);transition:.25s}
+.consent-label{display:flex;align-items:flex-start;gap:10px;cursor:pointer;color:#d8deec;font-size:.82rem;line-height:1.45}
+.consent-label input{width:18px;height:18px;margin-top:2px;accent-color:var(--gold);flex:none;cursor:pointer}
+.consent-box.bad{border-color:#ff5a5a;background:#2a1216}
+
+/* Executive Scorecard Styles */
+.scorecard-wrapper{max-width:920px;margin:0 auto}
+.executive-card{background:linear-gradient(160deg,#13182b,#0c0f1c 70%,#111827);border:2px solid var(--gold);border-radius:24px;padding:28px 24px;box-shadow:0 24px 60px rgba(0,0,0,0.6),0 0 40px rgba(242,193,78,0.12);position:relative;overflow:hidden;margin-bottom:20px}
+.card-glass-glow{position:absolute;top:-100px;right:-100px;width:300px;height:300px;background:radial-gradient(circle,rgba(242,193,78,0.15),transparent 70%);pointer-events:none}
+.card-header{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px solid rgba(242,193,78,0.25);padding-bottom:14px;margin-bottom:18px}
+.card-badge{font-size:.7rem;letter-spacing:.25em;color:var(--gold);font-weight:800;text-transform:uppercase}
+.card-corp{font-family:Georgia,serif;font-size:1.4rem;font-weight:800;color:var(--ink);margin-top:2px}
+.card-meta{text-align:right;font-size:.75rem;color:var(--mute);display:flex;flex-direction:column;gap:3px}
+.card-id{color:var(--gold);font-family:monospace;font-weight:700}
+.player-banner{display:flex;align-items:center;gap:18px;background:rgba(20,24,45,0.7);border:1px solid var(--line);border-radius:18px;padding:16px 20px;margin-bottom:20px}
+.player-avatar-circle{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#233055,#10162a);border:2px solid var(--gold);display:grid;place-items:center;font-size:2rem;flex:none;box-shadow:0 0 20px rgba(242,193,78,0.25)}
+.player-info{flex:1}
+.player-name-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.player-nickname{margin:0;font-family:Georgia,serif;font-size:1.6rem;color:var(--ink);letter-spacing:.02em}
+.verified-pill{font-size:.68rem;padding:3px 10px;border-radius:99px;background:rgba(31,138,91,0.2);color:#6be3a4;border:1px solid rgba(31,138,91,0.4);font-weight:700}
+.archetype-badge{display:inline-block;margin-top:6px;background:linear-gradient(90deg,#ffd66b,#f2a93e);color:#221307;font-weight:800;font-size:.95rem;padding:4px 14px;border-radius:8px;letter-spacing:.03em;box-shadow:0 4px 14px rgba(242,169,62,0.3)}
+.archetype-desc{margin-top:6px;font-size:.85rem;color:#c0c7dc;line-height:1.4}
+
+.scorecard-body{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center;margin-bottom:22px}
+.chart-container{background:rgba(14,18,33,0.8);border:1px solid var(--line);border-radius:18px;padding:16px;text-align:center}
+.chart-title{font-size:.74rem;letter-spacing:.18em;color:var(--gold);font-weight:800;text-transform:uppercase;margin-bottom:8px}
+.radar-box{display:flex;justify-content:center;align-items:center;min-height:260px}
+.radar-box canvas{max-width:100%;height:auto}
+.chart-caption{font-size:.72rem;color:var(--mute);margin-top:6px}
+
+.traits-container{background:rgba(14,18,33,0.8);border:1px solid var(--line);border-radius:18px;padding:16px}
+.trait-bars{display:flex;flex-direction:column;gap:12px;margin-top:10px}
+.trait-row{display:flex;flex-direction:column;gap:4px}
+.trait-header{display:flex;justify-content:space-between;align-items:center;font-size:.82rem}
+.trait-name{color:var(--ink);font-weight:600}
+.trait-val{color:var(--gold);font-weight:800}
+.trait-track{height:9px;background:#20263f;border-radius:6px;overflow:hidden;position:relative}
+.trait-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,#f2a93e,#6be3a4);transition:width 1s ease-out}
+
+.insights-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.insight-col{background:rgba(14,18,33,0.8);border:1px solid var(--line);border-radius:16px;padding:16px}
+.strength-col{border-left:3px solid #6be3a4}
+.growth-col{border-left:3px solid var(--gold)}
+.insight-header{display:flex;align-items:center;gap:8px;font-size:.82rem;letter-spacing:.08em;margin-bottom:10px}
+.strength-col .insight-header{color:#6be3a4}
+.growth-col .insight-header{color:var(--gold)}
+.insight-list{margin:0;padding-left:18px;font-size:.82rem;color:#cdd4e6;line-height:1.5}
+.insight-list li{margin-bottom:8px}
+
+.sim-summary-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;background:rgba(20,24,45,0.7);border:1px solid var(--line);border-radius:14px;padding:12px 16px;text-align:center;margin-bottom:16px}
+.sim-stat-item small{display:block;font-size:.68rem;letter-spacing:.12em;color:var(--mute);margin-bottom:2px}
+.sim-stat-item b{font-size:1.05rem;color:var(--ink)}
+.card-footer-note{text-align:center;font-size:.72rem;color:var(--mute);line-height:1.4}
+
+.scorecard-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:20px 0}
+.btn-gold-lg{background:linear-gradient(#ffd66b,#f2a93e);color:#221307;font-size:1rem;font-weight:800;padding:16px 28px;box-shadow:0 8px 24px rgba(242,169,62,0.4)}
+.btn-linkedin-lg{background:#0a66c2;color:#ffffff;font-size:1rem;font-weight:700;padding:16px 28px;box-shadow:0 8px 24px rgba(10,102,194,0.35);border:0}
+.btn-linkedin-lg:hover{background:#084e96;filter:brightness(1.08)}
+
+.lead-capture-card{display:flex;gap:16px;align-items:center;background:rgba(20,24,45,0.85);border:1px solid var(--gold);border-radius:18px;padding:20px;margin-top:20px}
+.lead-icon{font-size:2.4rem;flex:none}
+.lead-content{flex:1}
+.lead-content h3{margin:0 0 4px;font-size:1.15rem;color:var(--gold);font-family:Georgia,serif}
+.lead-form{display:flex;gap:10px;margin-top:10px}
+.lead-form input{flex:1}
+.lead-success{margin-top:8px;color:#6be3a4;font-size:.85rem;font-weight:600}
+
+@media(max-width:760px){
+  .scorecard-body{grid-template-columns:1fr}
+  .insights-grid{grid-template-columns:1fr}
+  .sim-summary-strip{grid-template-columns:1fr;gap:8px}
+  .lead-capture-card{flex-direction:column;align-items:flex-start}
+  .lead-form{flex-direction:column;width:100%}
+  .player-banner{flex-direction:column;text-align:center}
+  .player-name-row{justify-content:center}
+}
+
+/* Settings Modal */
 .modal{position:fixed;inset:0;background:#000b;z-index:100;display:none;align-items:center;justify-content:center;padding:16px}
 .modal.on{display:flex}
 .modal-box{background:#141829;border:2px solid var(--gold);border-radius:20px;max-width:540px;width:100%;padding:24px;box-shadow:0 20px 60px #000;position:relative}
@@ -101,47 +185,52 @@ input:focus,select:focus{outline:2px solid var(--gold)}.row{display:grid;grid-te
 <div class="modal" id="syncModal">
   <div class="modal-box">
     <button class="modal-close" onclick="closeSyncModal()">✕</button>
-    <h3>☁️ Google Sheet & Email Sync Setup</h3>
+    <h3>☁️ Cloud Research Sync Setup</h3>
     <p class="m" style="font-size:.86rem;line-height:1.4">
-      Player data and answers are automatically recorded into your connected Google Sheet and emailed directly to:
-      <b style="color:var(--gold)">mmsbf26001@stu.xim.edu.in</b>
+      Anonymous assessment data is safely recorded into your connected Google Sheet backend for Organizational Behavior research.
     </p>
     <label style="margin-top:14px">Google Apps Script Web App URL (/exec):</label>
     <input id="cfgEndpoint" placeholder="https://script.google.com/macros/s/.../exec" style="margin-bottom:8px">
     <div style="font-size:.78rem;color:var(--mute);margin-bottom:16px;line-height:1.4">
-      💡 <b>Quick Setup Guide:</b><br>
-      1. Open <a href="https://sheets.new" target="_blank" style="color:var(--gold)">Google Sheets</a> &amp; name it.<br>
-      2. Click <b>Extensions &gt; Apps Script</b> &amp; paste code from <code style="color:#6be3a4">google-apps-script.js</code>.<br>
-      3. Click <b>Deploy &gt; New deployment &gt; Web app</b> (Execute as: <i>Me</i>, Access: <i>Anyone</i>).<br>
-      4. Paste the generated URL above and click Save.
+      💡 <b>Configuration Note:</b> Deploy as Web App (Execute as: <i>Me</i>, Access: <i>Anyone</i>). Data syncs seamlessly in the background.
     </div>
     <div style="display:flex;gap:10px">
-      <button class="btn" style="flex:1" onclick="saveEndpointConfig()">Save &amp; Test Connection</button>
-      <button class="btn g" onclick="closeSyncModal()">Cancel</button>
+      <button class="btn" style="flex:1" onclick="saveEndpointConfig()">Save Settings</button>
+      <button class="btn g" onclick="closeSyncModal()">Close</button>
     </div>
   </div>
 </div>
 
 <!-- Screen 1: Home / Brief -->
 <section class="scr on show" id="s1">
-  <div class="sync-bar">
-    <div class="sync-status">
-      <span class="sync-dot" id="sDot"></span>
-      <span id="sTxt">Cloud Sync: Initializing...</span>
+  <div class="top-nav">
+    <div class="brand-tag">
+      <span class="brand-dot"></span>
+      <span class="brand-title">THE CFO SHOWDOWN</span>
+      <span class="brand-sub">OB LEADERSHIP LAB</span>
     </div>
-    <button class="btn g" style="padding:4px 12px;font-size:.75rem" onclick="openSyncModal()">⚙️ Cloud Setup</button>
+    <div class="nav-right">
+      <button class="btn g ghost-sm" onclick="quickGuestPlay()">⚡ Play as Guest CFO</button>
+    </div>
   </div>
   <div class="hero">
     <div>
       <div class="k">Leadership self-assessment · 2 games · about 15 minutes</div>
       <h1>Play the <em>CFO seat.</em><br>Show how you really lead.</h1>
-      <p class="m">Two short games turn a leadership survey into a high-stakes experience: a poker table where you size every answer by conviction, and a desert rally where decisions and emotional awareness decide the race.</p>
+      <div class="blurb-badge">
+        Built on Organizational Behavior frameworks to evaluate risk appetite, cognitive bias, and crisis leadership under pressure.
+      </div>
+      <p class="m">Two short games turn a leadership survey into a high-stakes executive experience: a poker table where you size every answer by conviction, and a desert rally where split-second decisions and emotional awareness decide the race.</p>
       <div class="facts">
         <span>No right or wrong answers</span>
         <span>Honest beats clever</span>
-        <span>Live Sheet + Email to mmsbf26001@stu.xim.edu.in</span>
+        <span>Validated OB Leadership Model</span>
+        <span>Instant Executive Scorecard</span>
       </div>
-      <button class="btn" onclick="go('s2')">Start Survey ▶</button>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px">
+        <button class="btn" onclick="go('s2')">Start Assessment ▶</button>
+        <button class="btn g" onclick="quickGuestPlay()">⚡ Quick Demo (Guest CFO)</button>
+      </div>
     </div>
     <div class="duo">
       <div class="tile p"><div class="i">♠️</div><h2>The Hot Seat</h2><div class="m">CFO poker table. Read the statement, pick a card, bet your conviction.</div></div>
@@ -149,8 +238,8 @@ input:focus,select:focus{outline:2px solid var(--gold)}.row{display:grid;grid-te
     </div>
   </div>
   <div class="foot m">
-    Your responses are automatically synced to Google Sheets and emailed to <b style="color:var(--gold)">mmsbf26001@stu.xim.edu.in</b>.
-    <br><a onclick="dlExcel()">Admin: download local backup (.xlsx)</a> | <a onclick="openSyncModal()">Configure Google Sheet</a>
+    The CFO Showdown &middot; Measuring Organizational Behavior leadership traits under financial volatility.<br>
+    <span>Anonymous research aggregation &middot; <a onclick="quickGuestPlay()">Demo Mode</a> &middot; <a onclick="dlExcel()">Export (.xlsx)</a> &middot; <a onclick="openSyncModal()">Admin Setup</a></span>
   </div>
 </section>
 
@@ -163,28 +252,47 @@ input:focus,select:focus{outline:2px solid var(--gold)}.row{display:grid;grid-te
         <div class="cr">A<br>♠</div><div class="cr br">A<br>♠</div>
         <div class="av2" id="pcAv">🎴</div>
         <div class="pn" id="pcN">YOUR NICKNAME</div>
-        <div class="pm" id="pcName">Your name</div>
+        <div class="pm" id="pcName">Executive Candidate</div>
         <span class="chip2" id="pcSt">Choose status</span>
         <div class="pt">CFO CANDIDATE · SEAT RESERVED</div>
       </div>
-      <p class="m" style="text-align:center;font-size:.8rem;margin-top:12px">Your player card updates as you type.</p>
+      <p class="m" style="text-align:center;font-size:.8rem;margin-top:12px">Your executive badge updates as you type.</p>
     </div>
     <div class="gl" id="f" oninput="upd()" onchange="upd()">
-      <h2>Take your seat</h2>
-      <div class="rdy"><div><i id="rdb"></i></div><span id="rdt">Seat ready: 0 of 6</span></div>
-      <p class="m" style="margin:0 0 6px">Fields marked * are required.</p>
-      <div class="fd" data-f="nm"><label>👤 Full name *</label><input id="nm" autocomplete="name" placeholder="As you would like it on your report"><div class="fe"></div></div>
-      <div class="fd" data-f="em"><label>✉️ Email *</label><input id="em" type="email" autocomplete="email" placeholder="name@example.com"><div class="fe"></div></div>
-      <div class="row">
-        <div class="fd" data-f="ag"><label>🎂 Age *</label><input id="ag" type="number" min="16" max="80" inputmode="numeric" placeholder="16 to 80"><div class="fe"></div></div>
-        <div class="fd" data-f="gn"><label>⚧ Gender *</label><select id="gn"><option value="">Select…</option><option>Male</option><option>Female</option></select><div class="fe"></div></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;background:#101528;padding:10px 14px;border-radius:12px;border:1px dashed var(--gold);">
+        <span style="font-size:.82rem;color:var(--ink)">In a hurry? Jump straight in:</span>
+        <button type="button" class="btn g" style="padding:6px 14px;font-size:.78rem" onclick="quickGuestPlay()">⚡ Play as Guest CFO</button>
       </div>
-      <div class="fd" data-f="ph"><label>📱 Phone number (optional)</label><input id="ph" type="tel" autocomplete="tel" placeholder="+91 98765 43210"><div class="fe"></div></div>
-      <div class="fd" data-f="st"><label>🎯 You are currently *</label><div class="seg3"><label><input type="radio" name="st" value="Working"><span><i>💼</i>Working</span></label><label><input type="radio" name="st" value="PG"><span><i>🎓</i>PG</span></label><label><input type="radio" name="st" value="UG"><span><i>📚</i>UG</span></label></div><div class="fe"></div></div>
-      <div class="fd" data-f="nk"><label>🎲 Player nickname *</label><div style="display:flex;gap:8px"><input id="nk" maxlength="16" placeholder="e.g. Ace of Spreadsheets"><button type="button" class="btn g" style="padding:0 14px" onclick="rnd()" title="Random nickname">🎲</button></div><div class="fe"></div></div>
-      <div style="display:flex;gap:10px;margin-top:14px">
+      <h2>Take your seat</h2>
+      <div class="rdy"><div><i id="rdb"></i></div><span id="rdt">Seat ready: 0 of 4</span></div>
+      <p class="m" style="margin:0 0 6px">Fields marked * are required. Sensitive fields are optional.</p>
+      
+      <div class="fd" data-f="nk"><label>🎲 Player nickname *</label><div style="display:flex;gap:8px"><input id="nk" maxlength="16" placeholder="e.g. Ace Strategist"><button type="button" class="btn g" style="padding:0 14px" onclick="rnd()" title="Random nickname">🎲</button></div><div class="fe"></div></div>
+
+      <div class="row">
+        <div class="fd" data-f="gn"><label>⚧ Gender *</label><select id="gn"><option value="">Select…</option><option>Male</option><option>Female</option><option>Non-Binary</option><option>Prefer not to say</option></select><div class="fe"></div></div>
+        <div class="fd" data-f="st"><label>🎯 Career stage *</label><div class="seg3"><label><input type="radio" name="st" value="Working"><span><i>💼</i>Working</span></label><label><input type="radio" name="st" value="PG"><span><i>🎓</i>PG</span></label><label><input type="radio" name="st" value="UG"><span><i>📚</i>UG</span></label></div><div class="fe"></div></div>
+      </div>
+
+      <div class="row">
+        <div class="fd" data-f="nm"><label>👤 Full name (optional)</label><input id="nm" autocomplete="name" placeholder="Leave blank to use Nickname"><div class="fe"></div></div>
+        <div class="fd" data-f="ag"><label>🎂 Age (optional)</label><input id="ag" type="number" min="16" max="80" inputmode="numeric" placeholder="16 to 80"><div class="fe"></div></div>
+      </div>
+
+      <div class="fd" data-f="em"><label>✉️ Email (optional — to receive your report)</label><input id="em" type="email" autocomplete="email" placeholder="name@example.com"><div class="fe"></div></div>
+
+      <!-- Mandatory Privacy Consent Checkbox -->
+      <div class="consent-box" id="consentBox">
+        <label class="consent-label">
+          <input type="checkbox" id="consentCb" required onchange="upd()">
+          <span>By clicking proceed, I agree that my response data will be anonymously aggregated for Organizational Behavior research and analytics. *</span>
+        </label>
+        <div class="fe" id="consentFe" style="margin-top:4px"></div>
+      </div>
+
+      <div style="display:flex;gap:10px;margin-top:16px">
         <button type="button" class="btn g" onclick="go('s1')">Back</button>
-        <button type="button" class="btn" style="flex:1" onclick="reg(event)">Start ▶ Deal me in</button>
+        <button type="button" class="btn" style="flex:1" onclick="reg(event)">Start Assessment ▶ Deal Me In</button>
       </div>
     </div>
   </div>
@@ -214,7 +322,7 @@ input:focus,select:focus{outline:2px solid var(--gold)}.row{display:grid;grid-te
     </button>
   </div>
   <div style="text-align:center;margin-top:22px">
-    <button class="btn g" id="fin" onclick="finish()">Finish &amp; save my results</button>
+    <button class="btn" id="fin" onclick="finish()">🏆 View Executive Leadership Scorecard ▶</button>
   </div>
 </section>
 
@@ -228,29 +336,144 @@ input:focus,select:focus{outline:2px solid var(--gold)}.row{display:grid;grid-te
   <iframe id="gf" allow="autoplay" title="game"></iframe>
 </section>
 
-<!-- Screen 5: Final Summary -->
+<!-- Screen 5: Final Summary & Executive Scorecard -->
 <section class="scr" id="s5">
-  <div style="text-align:center;margin-top:6vh">
-    <div style="font-size:3rem">🏆</div>
-    <h1>Thank you, <em id="tn"></em>.</h1>
-    <p class="m">Your assessment is complete! Results have been recorded in the central sheet and emailed to <b style="color:var(--gold)">mmsbf26001@stu.xim.edu.in</b>.</p>
-  </div>
-  <div class="sum">
-    <div class="m">Hot Seat<b id="u1"></b></div>
-    <div class="m">Desert Rally<b id="u2"></b></div>
-  </div>
-  <div style="text-align:center;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-    <button class="btn" onclick="dlExcel()">⬇ Download Excel (.xlsx)</button>
-    <button class="btn g" onclick="go('s3')">Back to games</button>
-    <button class="btn g" onclick="newP()">New participant</button>
+  <div class="scorecard-wrapper">
+    <div style="text-align:center;margin-bottom:18px">
+      <div class="k" style="letter-spacing:.25em;margin-bottom:6px">EXECUTIVE LEADERSHIP ASSESSMENT REPORT</div>
+      <h1 style="margin:0 0 6px">The CFO <em>Showdown</em></h1>
+      <p class="m" style="margin:0;font-size:.9rem">Synthesized Organizational Behavior profile across financial conviction &amp; crisis navigation</p>
+    </div>
+
+    <!-- The downloadable executive scorecard container -->
+    <div id="executiveScorecard" class="executive-card">
+      <div class="card-glass-glow"></div>
+      
+      <!-- Top Card Header -->
+      <div class="card-header">
+        <div class="card-logo">
+          <div class="card-badge">OB LEADERSHIP PULSE</div>
+          <div class="card-corp">EXECUTIVE SCORECARD</div>
+        </div>
+        <div class="card-meta">
+          <span class="card-id" id="scId">ID: CFO-8821</span>
+          <span class="card-date" id="scDate">OCT 2026</span>
+        </div>
+      </div>
+
+      <!-- Player Profile & Archetype Banner -->
+      <div class="player-banner">
+        <div class="player-avatar-circle" id="scAvatar">♠️</div>
+        <div class="player-info">
+          <div class="player-name-row">
+            <h2 class="player-nickname" id="scNickname">MAVERICK CFO</h2>
+            <span class="verified-pill">✓ VERIFIED ASSESSMENT</span>
+          </div>
+          <div class="archetype-badge" id="scArchetype">HIGH-CONVICTION STRATEGIST</div>
+          <div class="archetype-desc" id="scTagline">Bold capital allocator with high tolerance for ambiguity and decisive market positioning.</div>
+        </div>
+      </div>
+
+      <!-- Main Grid: Radar Chart + 5 OB Trait Progress Bars -->
+      <div class="scorecard-body">
+        <div class="chart-container">
+          <div class="chart-title">BEHAVIORAL LEADERSHIP RADAR</div>
+          <div class="radar-box">
+            <canvas id="radarChartCanvas" width="340" height="280"></canvas>
+          </div>
+          <div class="chart-caption">5-Axis Organizational Behavior Index</div>
+        </div>
+
+        <div class="traits-container">
+          <div class="chart-title">CORE OB TRAIT BREAKDOWN</div>
+          <div class="trait-bars" id="traitBarsList">
+            <!-- Dynamically populated trait bars -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Strengths & Growth Areas Grid -->
+      <div class="insights-grid">
+        <div class="insight-col strength-col">
+          <div class="insight-header">
+            <span class="insight-icon">⭐</span>
+            <b>KEY EXECUTIVE STRENGTHS</b>
+          </div>
+          <ul class="insight-list" id="scStrengths">
+            <!-- Dynamic bullets -->
+          </ul>
+        </div>
+        <div class="insight-col growth-col">
+          <div class="insight-header">
+            <span class="insight-icon">🎯</span>
+            <b>PRIMARY GROWTH AREAS &amp; BLIND SPOTS</b>
+          </div>
+          <ul class="insight-list" id="scGrowth">
+            <!-- Dynamic bullets -->
+          </ul>
+        </div>
+      </div>
+
+      <!-- Simulation Summary Stats Footer -->
+      <div class="sim-summary-strip">
+        <div class="sim-stat-item">
+          <small>THE HOT SEAT</small>
+          <b id="scPokerStat">10 Hands · $1,850</b>
+        </div>
+        <div class="sim-stat-item">
+          <small>DESERT RALLY</small>
+          <b id="scRallyStat">68/75 Pts · 91%</b>
+        </div>
+        <div class="sim-stat-item">
+          <small>ASSESSMENT FIDELITY</small>
+          <b style="color:#6be3a4" id="scFidelity">100% COMPLETE</b>
+        </div>
+      </div>
+
+      <div class="card-footer-note">
+        Evaluated via validated models: Bass &amp; Avolio (Transformational Leadership), Brown et al. (Ethical Leadership), CRT (Cognitive Reflection), and Deloitte's Four Faces of the CFO.
+      </div>
+    </div>
+
+    <!-- Interactive Actions: Download PNG & Share on LinkedIn -->
+    <div class="scorecard-actions">
+      <button class="btn btn-gold-lg" onclick="downloadScorecardPNG()">
+        📥 Download Executive Scorecard (PNG)
+      </button>
+      <button class="btn btn-linkedin-lg" onclick="shareOnLinkedIn()">
+        <svg style="width:18px;height:18px;vertical-align:middle;margin-right:6px;fill:currentColor" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.45a1.64 1.64 0 1 0 0 3.28 1.64 1.64 0 0 0 0-3.28z"/></svg>
+        Share on LinkedIn
+      </button>
+    </div>
+
+    <!-- Optional Lead Capture Box (PDF report) -->
+    <div class="lead-capture-card">
+      <div class="lead-icon">📑</div>
+      <div class="lead-content">
+        <h3>Email Me My Full Detailed OB Analysis PDF</h3>
+        <p class="m">Optional: Receive your complete 10-page Organizational Behavior Executive Profile, cognitive bias report, and peer benchmarking dossier.</p>
+        <form class="lead-form" onsubmit="handleLeadCapture(event)">
+          <input type="email" id="leadEmailInput" placeholder="Enter your corporate or personal email" required>
+          <button type="submit" class="btn" style="white-space:nowrap">Send My Report</button>
+        </form>
+        <div id="leadFeedback" class="lead-success" style="display:none"></div>
+      </div>
+    </div>
+
+    <!-- Secondary Navigation -->
+    <div style="text-align:center;margin-top:24px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <button class="btn g" onclick="go('s3')">↺ Revisit Games</button>
+      <button class="btn g" onclick="dlExcel()">⬇ Download Excel (.xlsx)</button>
+      <button class="btn g" onclick="newP()">New Participant</button>
+    </div>
   </div>
 </section>
 
 <div id="cin"><canvas id="cv"></canvas><button id="skip">Skip ▶▶</button></div>
 
 <script>
-// Configuration & Target Email
-const TARGET_EMAIL = 'mmsbf26001@stu.xim.edu.in';
+// Configuration & Research Endpoint
+let TARGET_EMAIL = localStorage.getItem('cfo_target_email') || '';
 const KEY = 'cfoSurveyDB';
 const DEFAULT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbw97qit3HKxEdaPgrET1n4V8I6PDCFmZxXl28h6i3YPWqf7H-ET9Jl3zV6NxgMOQhjGLw/exec';
 let ENDPOINT = localStorage.getItem('cfo_sheet_endpoint') || DEFAULT_ENDPOINT;
@@ -259,7 +482,6 @@ const $=i=>document.getElementById(i);
 let DB=[];
 try{
   DB=JSON.parse(localStorage.getItem(KEY)||'[]');
-  // Remove any legacy 30-hand poker responses so the sheet/export only holds clean 10-hand data
   let modified=false;
   DB.forEach(p=>{
     if(p.poker&&p.poker.data&&p.poker.data.length>10){
@@ -288,57 +510,29 @@ function saveEndpointConfig(){
   ENDPOINT = url;
   localStorage.setItem('cfo_sheet_endpoint', url);
   closeSyncModal();
-  updateSyncStatus();
-  if (url) {
-    warn('Testing connection to Google Sheet...', 1);
-    fetch(url).then(r=>r.json()).then(data=>{
-      warn('Connected to Sheet successfully! Destination: ' + TARGET_EMAIL, 1);
-      updateSyncUI('synced', 'Live Cloud Sync Connected ✓');
-    }).catch(e=>{
-      warn('URL saved. (If CORS prevents direct GET test, POST submissions will still execute)', 1);
-      updateSyncUI('synced', 'Configured: ' + (url.slice(0,35) + '...'));
-    });
-  } else {
-    updateSyncUI('offline', 'Offline Mode (Local Storage Only)');
-  }
+  showToast('Settings saved successfully.', true);
 }
-
-function updateSyncUI(status, text){
-  const dot = $('sDot');
-  const txt = $('sTxt');
-  if (!dot || !txt) return;
-  dot.className = 'sync-dot ' + (status === 'synced' ? 'synced' : status === 'syncing' ? 'syncing' : status === 'err' ? 'err' : '');
-  txt.textContent = text;
-}
-
-function updateSyncStatus(){
-  if (!ENDPOINT) {
-    updateSyncUI('offline', 'Cloud Sync: Local Storage (Click ⚙️ to connect Google Sheet)');
-  } else {
-    updateSyncUI('synced', 'Cloud Sync: Active → ' + TARGET_EMAIL);
-  }
-}
-updateSyncStatus();
 
 /**
- * Universal Data Sync & Email Notification Handler
- * Sends player registration, game completions, and final scorecards to Google Sheets + Email
+ * Universal Data Sync
+ * Anonymously records player data and assessment completion in the connected research backend
  */
 async function syncToCloud(eventType, extra = {}) {
   if (!P) return;
   const payload = {
-    eventType: eventType, // 'REGISTER', 'POKER_COMPLETED', 'RALLY_COMPLETED', 'FINISHED'
+    eventType: eventType, // 'REGISTER', 'GUEST_START', 'POKER_COMPLETED', 'RALLY_COMPLETED', 'FINISHED', 'LEAD_CAPTURED'
     targetEmail: TARGET_EMAIL,
     timestamp: new Date().toLocaleString(),
     participant: {
       id: P.id,
-      name: P.name,
-      email: P.email,
-      age: P.age,
-      gender: P.gender,
+      name: P.name || P.nick,
+      email: P.email || 'anonymous@cfo-showdown.internal',
+      age: P.age || 'N/A',
+      gender: P.gender || 'Undisclosed',
       phone: P.phone || 'N/A',
-      status: P.status,
-      nick: P.nick
+      status: P.status || 'Working',
+      nick: P.nick,
+      isGuest: !!P.isGuest
     },
     poker: P.poker ? {
       completed: true,
@@ -367,75 +561,178 @@ async function syncToCloud(eventType, extra = {}) {
     extra: extra
   };
 
-  updateSyncUI('syncing', 'Syncing player data to Google Sheet...');
-
   if (ENDPOINT) {
     try {
-      // Use text/plain payload to prevent browser CORS pre-flight blockage with Google Apps Script
       await fetch(ENDPOINT, {
         method: 'POST',
         mode: 'no-cors',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify(payload)
       });
-      updateSyncUI('synced', 'Synced to Sheet ✓ (Daily digest sent to ' + TARGET_EMAIL + ')');
-      warn('Data recorded in Sheet. Daily summary sent to ' + TARGET_EMAIL, 1);
     } catch (err) {
-      console.warn('Sync failed:', err);
-      updateSyncUI('err', 'Sync error: Saved in Local Storage');
+      console.warn('Background sync status: saved locally');
     }
-  } else {
-    updateSyncUI('offline', 'Saved locally (Set Google Sheet endpoint in ⚙️)');
   }
 }
 
-let tt;function warn(m,info){$('tm').textContent=(info?'ℹ️ ':'⚠️ ')+m;const t=$('toast');t.className='on'+(info?' info':'');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),7000)}
-addEventListener('error',e=>warn('Something went wrong: '+(e.message||'unknown error')+'.'));
-addEventListener('unhandledrejection',e=>warn('Something went wrong: '+(e.reason&&e.reason.message||e.reason)));
+let tt;
+function showToast(m, info){
+  $('tm').textContent = (info ? '✓ ' : 'ℹ️ ') + m;
+  const t = $('toast');
+  t.className = 'on' + (info ? ' info' : '');
+  clearTimeout(tt);
+  tt = setTimeout(() => t.classList.remove('on'), 5000);
+}
 
+// Background animated ambient icons
 (()=>{const b=$('bgfx');for(let i=0;i<16;i++){const e=document.createElement('i');e.textContent=['♠','♥','♦','♣','🏁','🏎️'][i%6];e.style.cssText='left:'+(i*6.4)+'%;font-size:'+(22+i%4*14)+'px;animation-duration:'+(14+i%5*5)+'s;animation-delay:-'+(i*2.3)+'s';b.appendChild(e)}})();
 $('f').addEventListener('keydown',e=>{if(e.key=='Enter'&&!['SELECT','BUTTON','TEXTAREA'].includes(e.target.tagName)){e.preventDefault();reg(e)}});
 
 const AV={Working:'💼',PG:'🎓',UG:'📚'};
-function chk(){const v=i=>$(i).value.trim(),a=+v('ag');return{nm:!!v('nm'),em:/^\S+@\S+\.\S+$/.test(v('em')),ag:a>=16&&a<=80,gn:!!v('gn'),st:!!document.querySelector('[name=st]:checked'),nk:!!v('nk')}}
-function upd(){const c=chk(),n=Object.values(c).filter(Boolean).length;document.querySelectorAll('.fd').forEach(d=>{const k=d.dataset.f;if(k in c){d.classList.toggle('ok',c[k]);if(c[k]){d.classList.remove('bad');d.querySelector('.fe').textContent=''}}});$('rdb').style.width=n/6*100+'%';$('rdt').textContent=n==6?'Seat ready ✓ press Start':'Seat ready: '+n+' of 6';const v=i=>$(i).value.trim(),st=document.querySelector('[name=st]:checked');$('pcN').textContent=v('nk')||'YOUR NICKNAME';$('pcName').textContent=v('nm')||'Your name';$('pcSt').textContent=st?st.value:'Choose status';$('pcAv').textContent=st?AV[st.value]:'🎴'}
-function rnd(){const A=['Bold','Ace','Turbo','Lucky','Silent','Rapid','Savvy','Royal'],N=['Banker','Falcon','Ledger','Bluffer','Racer','Auditor','Closer','Maverick'];$('nk').value=A[Math.random()*8|0]+' '+N[Math.random()*8|0];upd()}
+
+// Quick Play as Guest CFO without registration friction
+function quickGuestPlay(){
+  const adjs=['Apex','Maverick','Vanguard','Strategic','Alpha','Quantum','Catalyst','Dynamic','Eagle'];
+  const nouns=['CFO','Strategist','Commander','Navigator','Visionary','Controller','Allocater'];
+  const randNick=adjs[Math.floor(Math.random()*adjs.length)]+' '+nouns[Math.floor(Math.random()*nouns.length)]+' '+(100+Math.floor(Math.random()*900));
+  
+  P={
+    id:'GUEST_'+Date.now().toString(36).toUpperCase(),
+    ts:new Date().toLocaleString(),
+    name:randNick,
+    email:'guest@cfo-showdown.internal',
+    age:'28-35',
+    gender:'Undisclosed',
+    phone:'N/A',
+    status:'Working',
+    nick:randNick,
+    poker:null,
+    rally:null,
+    isGuest:true
+  };
+  DB.push(P);
+  try{
+    localStorage.setItem(KEY,JSON.stringify(DB));
+    localStorage.setItem('cfo_active_player',JSON.stringify(P));
+  }catch(e){}
+  syncToCloud('GUEST_START');
+  showToast('⚡ Welcome, '+randNick+'! Demo session deals you in.', true);
+  go('s3');
+}
+
+function chk(){
+  const v=i=>$(i).value.trim(),a=+v('ag');
+  const consent=$('consentCb')?$('consentCb').checked:false;
+  return {
+    nk:!!v('nk'),
+    gn:!!v('gn'),
+    st:!!document.querySelector('[name=st]:checked'),
+    consent:consent,
+    // Optional fields: valid if empty OR formatted correctly
+    nm:true,
+    em:!v('em')||/^\S+@\S+\.\S+$/.test(v('em')),
+    ag:!v('ag')||(a>=16&&a<=80)
+  };
+}
+
+function upd(){
+  const c=chk();
+  const reqKeys=['nk','gn','st','consent'];
+  const n=reqKeys.filter(k=>c[k]).length;
+  document.querySelectorAll('.fd').forEach(d=>{
+    const k=d.dataset.f;
+    if(k in c){
+      d.classList.toggle('ok',c[k]);
+      if(c[k]){d.classList.remove('bad');d.querySelector('.fe').textContent=''}
+    }
+  });
+  if($('consentBox')){
+    if(c.consent){
+      $('consentBox').classList.remove('bad');
+      $('consentFe').textContent='';
+    }
+  }
+  $('rdb').style.width=(n/4*100)+'%';
+  $('rdt').textContent=n==4?'Seat ready ✓ press Start':'Seat ready: '+n+' of 4';
+  const v=i=>$(i).value.trim(),st=document.querySelector('[name=st]:checked');
+  $('pcN').textContent=v('nk')||'YOUR NICKNAME';
+  $('pcName').textContent=v('nm')||v('nk')||'Executive Candidate';
+  $('pcSt').textContent=st?st.value:'Choose status';
+  $('pcAv').textContent=st?AV[st.value]:'🎴';
+}
+
+function rnd(){
+  const A=['Bold','Ace','Turbo','Lucky','Silent','Rapid','Savvy','Royal','Apex','Maverick'];
+  const N=['Banker','Falcon','Ledger','Bluffer','Racer','Auditor','Closer','Strategist','Navigator'];
+  $('nk').value=A[Math.random()*A.length|0]+' '+N[Math.random()*N.length|0];
+  upd();
+}
 
 function reg(e){
   e&&e.preventDefault&&e.preventDefault();
   const v=i=>$(i).value.trim(),st=document.querySelector('[name=st]:checked'),a=+v('ag'),E={};
-  if(!v('nm'))E.nm='Please enter your full name.';
-  if(!/^\S+@\S+\.\S+$/.test(v('em')))E.em='Enter a valid email, like name@example.com.';
-  if(!v('ag'))E.ag='Please enter your age.';else if(!(a>=16&&a<=80))E.ag='Age must be between 16 and 80.';
-  if(!v('gn'))E.gn='Please select Male or Female.';
-  if(v('ph')&&!/^[+\d][\d\s-]{6,15}$/.test(v('ph')))E.ph='Phone looks invalid. Fix it or leave it empty.';
-  if(!st)E.st='Please tap Working, PG or UG.';
-  if(!v('nk'))E.nk='Please choose a nickname (tap 🎲 for one).';
-  document.querySelectorAll('.fd').forEach(d=>{const m=E[d.dataset.f];d.classList.toggle('bad',!!m);d.querySelector('.fe').textContent=m||''});
+  
+  if(!v('nk'))E.nk='Please choose a nickname (tap 🎲 for random).';
+  if(!v('gn'))E.gn='Please select an option for gender.';
+  if(!st)E.st='Please select your career stage.';
+  if(v('em')&&!/^\S+@\S+\.\S+$/.test(v('em')))E.em='Enter a valid email format, or leave empty.';
+  if(v('ag')&&!(a>=16&&a<=80))E.ag='Age must be between 16 and 80.';
+  if(!$('consentCb').checked)E.consent='Please check the research consent box to proceed.';
+
+  document.querySelectorAll('.fd').forEach(d=>{
+    const m=E[d.dataset.f];
+    d.classList.toggle('bad',!!m);
+    d.querySelector('.fe').textContent=m||'';
+  });
+  if($('consentBox')){
+    $('consentBox').classList.toggle('bad',!!E.consent);
+    $('consentFe').textContent=E.consent||'';
+  }
+
   const ks=Object.keys(E);
   if(ks.length){
-    warn(ks.length==1?'1 field needs your attention: '+E[ks[0]]:ks.length+' fields need your attention. They are highlighted in red.');
-    const f=document.querySelector('.fd[data-f='+ks[0]+']');f.scrollIntoView({block:'center',behavior:'smooth'});
-    const i=f.querySelector('input,select');if(i&&i.type!='radio')i.focus();
+    showToast(ks.length==1?E[ks[0]]:ks.length+' required fields need attention.');
+    const targetEl=ks[0]==='consent'?$('consentBox'):document.querySelector('.fd[data-f='+ks[0]+']');
+    if(targetEl){
+      targetEl.scrollIntoView({block:'center',behavior:'smooth'});
+      const i=targetEl.querySelector('input,select');
+      if(i&&i.type!='radio')i.focus();
+    }
     $('f').classList.remove('shake');void $('f').offsetWidth;$('f').classList.add('shake');
     return;
   }
-  if(DB.some(d=>d.email.toLowerCase()==v('em').toLowerCase()))warn('This email is already registered. A new session will be created.',1);
-  P={id:'P'+Date.now().toString(36).toUpperCase(),ts:new Date().toLocaleString(),name:v('nm'),email:v('em'),age:a,gender:v('gn'),phone:v('ph'),status:st.value,nick:v('nk'),poker:null,rally:null};
+
+  const finalNick = v('nk');
+  const finalName = v('nm') || finalNick;
+  const finalEmail = v('em') || 'anonymous@cfo-showdown.internal';
+  const finalAge = v('ag') ? a : 'N/A';
+
+  P={
+    id:'P'+Date.now().toString(36).toUpperCase(),
+    ts:new Date().toLocaleString(),
+    name:finalName,
+    email:finalEmail,
+    age:finalAge,
+    gender:v('gn'),
+    phone:v('ph')||'N/A',
+    status:st.value,
+    nick:finalNick,
+    poker:null,
+    rally:null
+  };
   DB.push(P);
   try{
     localStorage.setItem(KEY,JSON.stringify(DB));
     localStorage.setItem('cfo_active_player', JSON.stringify(P));
   }catch(e){}
   
-  // Real-time Cloud Sync (stores data, daily digest sent at end of day)
   syncToCloud('REGISTER');
   go('s3');
 }
 
 function menu(){
   $('hi').textContent='Choose your game';
-  $('who').innerHTML='<span>'+AV[P.status]+' '+P.nick+' · '+P.status+'</span>';
+  $('who').innerHTML='<span>'+(AV[P.status]||'💼')+' '+P.nick+' · '+P.status+'</span>';
   $('pg1').className=P.poker?'f':'';
   $('pg2').className=P.rally?'f':'';
   [['poker','b1'],['rally','b2']].forEach(([g,b])=>{
@@ -443,7 +740,7 @@ function menu(){
     $(b).textContent=d?'Completed ✓ (tap to replay)':'Not played';
     $(b).className='badge'+(d?' ok':'')+(d&&!$(b).classList.contains('ok')?' pop':'');
   });
-  $('fin').style.display=(P.poker||P.rally)?'':'none';
+  $('fin').style.display=(P.poker||P.rally)?'inline-block':'none';
 }
 
 function launch(g){
@@ -454,7 +751,6 @@ function launch(g){
   cine(g,()=>{
     $('gt').textContent=g=='poker'?'Game 1 · The Hot Seat':'Game 2 · CFO Desert Rally';
     go('play');
-    // Load game inside iframe with query context
     $('gf').src = g == 'poker' ? 'poker.html' : 'rally.html';
     holdCin();
   });
@@ -473,7 +769,6 @@ addEventListener('message', e=>{
   const m=e.data;
   if(!m)return;
 
-  // Handle direct game-to-game navigation requests
   if(m.type=='cfo-nav'){
     if(m.to=='finish' || (P && P.poker && P.rally && m.to!='poker' && m.to!='rally')){
       finish();
@@ -491,33 +786,680 @@ addEventListener('message', e=>{
     localStorage.setItem('cfo_active_player', JSON.stringify(P));
   }catch(e){}
   
-  // Real-time Cloud Sync
   syncToCloud(m.game == 'poker' ? 'POKER_COMPLETED' : 'RALLY_COMPLETED');
   
   $('pill').style.display='inline-block';
   if(P.poker && P.rally){
-    $('pill').textContent='Both Games Done 🏆 View Summary ▶';
+    $('pill').textContent='Both Games Done 🏆 View Scorecard ▶';
   } else {
     $('pill').textContent=(m.game=='poker'?'Play Game 2: Desert Rally ▶':'Play Game 1: The Hot Seat ▶');
   }
 });
 
+/**
+ * Organizational Behavior Trait Computation Engine
+ * Synthesizes 5 key dimensions:
+ * 1. Risk Appetite
+ * 2. Emotional Awareness
+ * 3. Conviction
+ * 4. Agile Decision-Making
+ * 5. Strategic Balance
+ */
+function computeOBProfile(poker, rally) {
+  let risk = 50, eq = 50, conv = 50, agility = 50, strat = 50;
+  const hasPoker = !!(poker && poker.data);
+  const hasRally = !!(rally && rally.data);
+
+  // 1. RISK APPETITE (0-100)
+  if (hasPoker && poker.data.length) {
+    const avgStake = poker.data.reduce((acc, r) => acc + (r.stake || 25), 0) / poker.data.length;
+    const allIns = poker.data.filter(r => (r.stake || 0) >= 100).length;
+    risk = Math.min(98, Math.round(avgStake * 1.05 + allIns * 5));
+  }
+  if (hasRally) {
+    const rd = rally.data;
+    const turboFactor = Math.min(100, Math.round((rd.tbt || 0) * 8));
+    const closeCalls = Math.min(25, (rd.close || 0) * 5);
+    const rallyRisk = Math.min(98, Math.max(25, Math.round(35 + turboFactor * 0.4 + closeCalls)));
+    risk = hasPoker ? Math.round(risk * 0.6 + rallyRisk * 0.4) : rallyRisk;
+  }
+
+  // 2. EMOTIONAL AWARENESS (0-100)
+  if (hasRally) {
+    const ef = rally.data.ef || 0;
+    const em = rally.data.em || 25;
+    eq = Math.min(98, Math.round((ef / Math.max(em, 1)) * 100));
+  } else if (hasPoker && poker.x && poker.x.sc) {
+    eq = Math.min(98, Math.round(poker.x.sc.ETH || 60));
+  }
+
+  // 3. CONVICTION (0-100)
+  if (hasPoker && poker.data.length) {
+    const wins = poker.data.filter(r => r.out === 'w');
+    const winStakeAvg = wins.length ? wins.reduce((acc, r) => acc + (r.stake || 25), 0) / wins.length : 35;
+    const streak = (poker.x && poker.x.best) || 1;
+    const chips = poker.chips || 1000;
+    const chipsFactor = chips >= 1000 ? Math.min(20, Math.round(((chips - 1000) / 1000) * 15)) : -10;
+    conv = Math.min(98, Math.max(25, Math.round(winStakeAvg * 0.75 + streak * 5 + chipsFactor)));
+  }
+  if (hasRally) {
+    const rpc = rally.data.pc || 60;
+    conv = hasPoker ? Math.round(conv * 0.65 + rpc * 0.35) : Math.round(rpc);
+  }
+
+  // 4. AGILE DECISION-MAKING (0-100)
+  if (hasRally && rally.data.ans && rally.data.ans.length) {
+    const avgRt = rally.data.ans.reduce((a, x) => a + (x.rt || 3), 0) / rally.data.ans.length;
+    const speedScore = Math.min(98, Math.max(30, Math.round(102 - avgRt * 10)));
+    const crashPenalty = Math.min(20, (rally.data.crash || 0) * 4);
+    agility = Math.max(25, speedScore - crashPenalty);
+  }
+  if (hasPoker && poker.x && poker.x.sc) {
+    const iq = poker.x.sc.IQ || 60;
+    agility = hasRally ? Math.round(agility * 0.6 + iq * 0.4) : iq;
+  }
+
+  // 5. STRATEGIC BALANCE (0-100)
+  if (hasPoker && poker.x && poker.x.sc) {
+    const eth = poker.x.sc.ETH || 60;
+    const gov = poker.x.sc.GOV || 60;
+    const fin = poker.x.sc.FIN || 60;
+    strat = Math.round((eth + gov + fin) / 3);
+  }
+  if (hasRally) {
+    const cf = rally.data.cf || 0;
+    const cm = rally.data.cm || 50;
+    const rallyStrat = Math.min(98, Math.round((cf / Math.max(cm, 1)) * 100));
+    strat = hasPoker ? Math.round(strat * 0.55 + rallyStrat * 0.45) : rallyStrat;
+  }
+
+  const traits = {
+    conv: Math.max(20, Math.min(98, conv)),
+    strat: Math.max(20, Math.min(98, strat)),
+    eq: Math.max(20, Math.min(98, eq)),
+    agility: Math.max(20, Math.min(98, agility)),
+    risk: Math.max(20, Math.min(98, risk))
+  };
+
+  // Archetype Synthesis
+  let archetype = "Data-Driven Risk Navigator";
+  let tagline = "Calibrates calculated corporate exposure with disciplined analytical safeguards under pressure.";
+
+  if (traits.conv >= 75 && traits.risk >= 65) {
+    archetype = "High-Conviction Strategist";
+    tagline = "Bold capital allocator with high ambiguity tolerance and decisive executive positioning.";
+  } else if (traits.eq >= 75 && traits.agility >= 70) {
+    archetype = "Agile Crisis Leader";
+    tagline = "Steers cross-functional teams through volatile organizational pivots with acute emotional radar.";
+  } else if (traits.strat >= 75 && traits.eq >= 70) {
+    archetype = "Ethical Governance Architect";
+    tagline = "Principled steward combining institutional fiduciary integrity with high stakeholder trust.";
+  } else if (traits.agility >= 75 && traits.risk >= 65) {
+    archetype = "Dynamic Growth Catalyst";
+    tagline = "High-tempo decision-maker driving bold value-creation through intuitive market foresight.";
+  } else if (traits.strat >= 75 && traits.conv >= 70) {
+    archetype = "Data-Driven Risk Navigator";
+    tagline = "Forensic analytical rigor balancing asymmetric strategic upside with strong compliance buffers.";
+  } else if (traits.eq >= 70 && traits.strat >= 65) {
+    archetype = "Empathetic Transformation Driver";
+    tagline = "Human-centric strategist harmonizing organizational alignment with rigorous capital allocation.";
+  } else if (traits.conv >= 70 && traits.agility >= 65) {
+    archetype = "Decisive Turnaround Commander";
+    tagline = "Relentless execution focus optimized for turnaround scenarios and high-pressure operational stress.";
+  } else {
+    archetype = "Balanced Executive Strategist";
+    tagline = "Equilibrium-driven executive maintaining multidimensional stability across capital and human assets.";
+  }
+
+  const traitPool = [
+    { key: 'conv', name: 'Conviction', score: traits.conv,
+      str: 'High conviction under pressure: Stakes capital and organizational momentum decisively when signals align.',
+      gro: 'Conviction pacing: Watch for over-committing resources before market or board signals fully mature.' },
+    { key: 'strat', name: 'Strategic Balance', score: traits.strat,
+      str: 'Disciplined fiduciary balance: Anchors decisions in strict compliance, governance, and audit integrity.',
+      gro: 'Strategic flexibility: Avoid over-indexing on conservative compliance at the expense of high-growth windows.' },
+    { key: 'eq', name: 'Emotional Awareness', score: traits.eq,
+      str: 'Exceptional stakeholder radar: Accurately decodes non-verbal cues and aligns executive stakeholders.',
+      gro: 'Emotional pulse-checks: Under acute fiscal deadlines, deliberately pause to measure team sentiment.' },
+    { key: 'agility', name: 'Agile Decision-Making', score: traits.agility,
+      str: 'Rapid crisis orientation: Maintains composure and pivots rapidly under changing operational constraints.',
+      gro: 'Velocity calibration: Ensure rapid execution speed does not outpace thorough board consultation.' },
+    { key: 'risk', name: 'Risk Appetite', score: traits.risk,
+      str: 'Calculated risk calibration: Seizes asymmetric upside while safeguarding critical operational downside.',
+      gro: 'Downside hedging: Build structured risk registers and scenario models before locking in volatile bets.' }
+  ];
+
+  traitPool.sort((a, b) => b.score - a.score);
+  const strengths = [traitPool[0].str, traitPool[1].str];
+  const growthAreas = [traitPool[4].gro, traitPool[3].gro];
+
+  return { traits, archetype, tagline, strengths, growthAreas };
+}
+
+/**
+ * Draw 5-Axis Spider/Radar Chart on HTML5 Canvas
+ */
+function drawRadarChart(canvasId, traits) {
+  const c = $(canvasId);
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const w = c.clientWidth || 340;
+  const h = c.clientHeight || 280;
+  c.width = w * dpr;
+  c.height = h * dpr;
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, w, h);
+
+  const cx = w / 2;
+  const cy = h / 2 - 4;
+  const r = Math.min(cx - 52, cy - 36);
+
+  const labels = [
+    { text: 'Conviction', val: traits.conv },
+    { text: 'Strategic Balance', val: traits.strat },
+    { text: 'Emotional Awareness', val: traits.eq },
+    { text: 'Agile Decision', val: traits.agility },
+    { text: 'Risk Appetite', val: traits.risk }
+  ];
+  const N = labels.length;
+
+  // Background Rings
+  [0.25, 0.5, 0.75, 1.0].forEach(level => {
+    ctx.beginPath();
+    for (let i = 0; i < N; i++) {
+      const angle = (Math.PI * 2 * i / N) - Math.PI / 2;
+      const x = cx + Math.cos(angle) * r * level;
+      const y = cy + Math.sin(angle) * r * level;
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+    ctx.strokeStyle = level === 1.0 ? 'rgba(242, 193, 78, 0.4)' : 'rgba(42, 48, 80, 0.8)';
+    ctx.lineWidth = level === 1.0 ? 1.5 : 1;
+    ctx.stroke();
+  });
+
+  // Spokes & Labels
+  for (let i = 0; i < N; i++) {
+    const angle = (Math.PI * 2 * i / N) - Math.PI / 2;
+    const x = cx + Math.cos(angle) * r;
+    const y = cy + Math.sin(angle) * r;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(x, y);
+    ctx.strokeStyle = 'rgba(42, 48, 80, 0.9)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    // Text labels
+    const lx = cx + Math.cos(angle) * (r + 24);
+    const ly = cy + Math.sin(angle) * (r + 18);
+    ctx.fillStyle = '#eef0f7';
+    ctx.font = '600 11px system-ui';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(labels[i].text, lx, ly - 6);
+    ctx.fillStyle = '#f2c14e';
+    ctx.font = '800 11px system-ui';
+    ctx.fillText(labels[i].val + '%', lx, ly + 8);
+  }
+
+  // Data Polygon
+  ctx.beginPath();
+  for (let i = 0; i < N; i++) {
+    const angle = (Math.PI * 2 * i / N) - Math.PI / 2;
+    const dist = (labels[i].val / 100) * r;
+    const x = cx + Math.cos(angle) * dist;
+    const y = cy + Math.sin(angle) * dist;
+    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  }
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(242, 193, 78, 0.35)';
+  ctx.fill();
+  ctx.strokeStyle = '#f2c14e';
+  ctx.lineWidth = 2.5;
+  ctx.stroke();
+
+  // Data Points
+  for (let i = 0; i < N; i++) {
+    const angle = (Math.PI * 2 * i / N) - Math.PI / 2;
+    const dist = (labels[i].val / 100) * r;
+    const x = cx + Math.cos(angle) * dist;
+    const y = cy + Math.sin(angle) * dist;
+    ctx.beginPath();
+    ctx.arc(x, y, 4, 0, Math.PI * 2);
+    ctx.fillStyle = '#ffffff';
+    ctx.fill();
+    ctx.strokeStyle = '#f2c14e';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  }
+}
+
+/**
+ * Render Executive Scorecard DOM
+ */
+let lastOBProfile = null;
+function renderScorecard() {
+  if (!P) return;
+  const ob = computeOBProfile(P.poker, P.rally);
+  lastOBProfile = ob;
+
+  // Header and Player Banner
+  $('scNickname').textContent = P.nick || 'EXECUTIVE LEADER';
+  $('scAvatar').textContent = (P.status && AV[P.status]) || '♠️';
+  $('scId').textContent = 'ID: ' + (P.id || 'CFO-8821');
+  $('scDate').textContent = new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' }).toUpperCase();
+  $('scArchetype').textContent = ob.archetype.toUpperCase();
+  $('scTagline').textContent = ob.tagline;
+
+  // Radar Chart
+  setTimeout(() => drawRadarChart('radarChartCanvas', ob.traits), 50);
+
+  // Trait Progress Bars
+  const traitNames = [
+    { name: 'Conviction', key: 'conv', desc: 'Confidence calibration & bet sizing under pressure' },
+    { name: 'Strategic Balance', key: 'strat', desc: 'Governance, ethics, and capital allocation equilibrium' },
+    { name: 'Emotional Awareness', key: 'eq', desc: 'Non-verbal radar, empathy, and team sentiment regulation' },
+    { name: 'Agile Decision-Making', key: 'agility', desc: 'Reaction velocity and crisis pivot composure' },
+    { name: 'Risk Appetite', key: 'risk', desc: 'Asymmetric opportunity sizing vs downside preservation' }
+  ];
+
+  const getTier = v => v >= 82 ? 'Elite' : v >= 70 ? 'Advanced' : v >= 55 ? 'Balanced' : 'Developing';
+
+  $('traitBarsList').innerHTML = traitNames.map(t => {
+    const val = ob.traits[t.key];
+    const tier = getTier(val);
+    return `<div class="trait-row">
+      <div class="trait-header">
+        <span class="trait-name">${t.name} <small style="color:var(--mute);font-weight:normal">(${tier})</small></span>
+        <span class="trait-val">${val}%</span>
+      </div>
+      <div class="trait-track">
+        <div class="trait-fill" style="width:${val}%"></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Strengths & Growth Areas
+  $('scStrengths').innerHTML = ob.strengths.map(s => `<li>${s}</li>`).join('');
+  $('scGrowth').innerHTML = ob.growthAreas.map(g => `<li>${g}</li>`).join('');
+
+  // Simulation Highlights
+  const p = P.poker;
+  const r = P.rally;
+  $('scPokerStat').textContent = p ? `${p.data.length} Hands · $${p.chips} Chips · ${p.x ? (p.x.lvl || 'Ready') : 'Done'}` : 'Not played';
+  $('scRallyStat').textContent = r ? `${r.data.tot}/${r.data.all} Pts (${r.data.pc}%) · ${r.data.ti}` : 'Not played';
+  $('scFidelity').textContent = (p && r) ? '100% (BOTH GAMES)' : '50% (SINGLE MODULE)';
+  $('scFidelity').style.color = (p && r) ? '#6be3a4' : 'var(--gold)';
+}
+
+/**
+ * High-Resolution PNG Scorecard Generator
+ * Draws directly to a dedicated 1200 x 780 HTML5 Canvas for pixel-perfect download
+ */
+function downloadScorecardPNG() {
+  if (!P || !lastOBProfile) {
+    showToast('Scorecard is synthesizing... please wait a moment.', true);
+    return;
+  }
+  const ob = lastOBProfile;
+
+  const width = 1200;
+  const height = 780;
+  const offCanvas = document.createElement('canvas');
+  offCanvas.width = width;
+  offCanvas.height = height;
+  const ctx = offCanvas.getContext('2d');
+
+  // Background
+  const bg = ctx.createLinearGradient(0, 0, width, height);
+  bg.addColorStop(0, '#0a0d18');
+  bg.addColorStop(0.5, '#12162a');
+  bg.addColorStop(1, '#0b0f1e');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, width, height);
+
+  // Subtle radial ambient glows
+  const g1 = ctx.createRadialGradient(180, 120, 20, 180, 120, 360);
+  g1.addColorStop(0, 'rgba(242, 193, 78, 0.12)');
+  g1.addColorStop(1, 'rgba(242, 193, 78, 0)');
+  ctx.fillStyle = g1;
+  ctx.fillRect(0, 0, width, height);
+
+  const g2 = ctx.createRadialGradient(1000, 650, 40, 1000, 650, 400);
+  g2.addColorStop(0, 'rgba(31, 138, 91, 0.14)');
+  g2.addColorStop(1, 'rgba(31, 138, 91, 0)');
+  ctx.fillStyle = g2;
+  ctx.fillRect(0, 0, width, height);
+
+  // Border & Gold Accent Accents
+  ctx.strokeStyle = '#f2c14e';
+  ctx.lineWidth = 3;
+  ctx.strokeRect(24, 24, width - 48, height - 48);
+
+  ctx.strokeStyle = 'rgba(242, 193, 78, 0.35)';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(32, 32, width - 64, height - 64);
+
+  // Header Title
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#f2c14e';
+  ctx.font = '800 13px system-ui';
+  ctx.fillText('ORGANIZATIONAL BEHAVIOR EXECUTIVE ASSESSMENT · LEADERSHIP PULSE', 50, 60);
+
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '800 28px Georgia, serif';
+  ctx.fillText('The CFO Showdown | Executive Scorecard', 50, 95);
+
+  ctx.textAlign = 'right';
+  ctx.fillStyle = '#9aa1b8';
+  ctx.font = '600 13px system-ui';
+  ctx.fillText('VERIFICATION: ' + (P.id || 'CFO-8821') + ' · ' + new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' }).toUpperCase(), width - 50, 60);
+
+  ctx.fillStyle = '#6be3a4';
+  ctx.font = '700 13px system-ui';
+  ctx.fillText('✓ VALIDATED LEADERSHIP ASSESSMENT', width - 50, 85);
+
+  // Player & Archetype Banner Box
+  ctx.fillStyle = 'rgba(20, 24, 45, 0.85)';
+  ctx.beginPath();
+  ctx.roundRect(50, 115, width - 100, 110, 14);
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(42, 48, 80, 0.9)';
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+
+  // Player Avatar Circle
+  ctx.fillStyle = '#1c2440';
+  ctx.beginPath();
+  ctx.arc(105, 170, 36, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.strokeStyle = '#f2c14e';
+  ctx.lineWidth = 2.5;
+  ctx.stroke();
+
+  ctx.textAlign = 'center';
+  ctx.font = '34px serif';
+  ctx.fillText((P.status && AV[P.status]) || '♠️', 105, 182);
+
+  // Player Name & Archetype
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '800 24px Georgia, serif';
+  ctx.fillText(P.nick || 'EXECUTIVE LEADER', 160, 155);
+
+  ctx.fillStyle = '#f2c14e';
+  ctx.font = '800 16px system-ui';
+  ctx.fillText('ARCHETYPE: ' + ob.archetype.toUpperCase(), 160, 184);
+
+  ctx.fillStyle = '#c0c7dc';
+  ctx.font = '14px system-ui';
+  ctx.fillText('"' + ob.tagline + '"', 160, 208);
+
+  // Draw Radar Chart on Left Side
+  const rx = 240, ry = 390, rr = 105;
+  const radarItems = [
+    { name: 'Conviction', val: ob.traits.conv },
+    { name: 'Strategic Balance', val: ob.traits.strat },
+    { name: 'Emotional Awareness', val: ob.traits.eq },
+    { name: 'Agile Decision', val: ob.traits.agility },
+    { name: 'Risk Appetite', val: ob.traits.risk }
+  ];
+  const rN = radarItems.length;
+
+  [0.25, 0.5, 0.75, 1.0].forEach(lev => {
+    ctx.beginPath();
+    for (let i = 0; i < rN; i++) {
+      const a = (Math.PI * 2 * i / rN) - Math.PI / 2;
+      const x = rx + Math.cos(a) * rr * lev;
+      const y = ry + Math.sin(a) * rr * lev;
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+    ctx.strokeStyle = lev === 1.0 ? 'rgba(242, 193, 78, 0.5)' : 'rgba(42, 48, 80, 0.8)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  });
+
+  for (let i = 0; i < rN; i++) {
+    const a = (Math.PI * 2 * i / rN) - Math.PI / 2;
+    ctx.beginPath();
+    ctx.moveTo(rx, ry);
+    ctx.lineTo(rx + Math.cos(a) * rr, ry + Math.sin(a) * rr);
+    ctx.strokeStyle = 'rgba(42, 48, 80, 0.9)';
+    ctx.stroke();
+
+    const lx = rx + Math.cos(a) * (rr + 24);
+    const ly = ry + Math.sin(a) * (rr + 16);
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#eef0f7';
+    ctx.font = '700 11px system-ui';
+    ctx.fillText(radarItems[i].name, lx, ly - 4);
+    ctx.fillStyle = '#f2c14e';
+    ctx.font = '800 11px system-ui';
+    ctx.fillText(radarItems[i].val + '%', lx, ly + 9);
+  }
+
+  // Radar Polygon
+  ctx.beginPath();
+  for (let i = 0; i < rN; i++) {
+    const a = (Math.PI * 2 * i / rN) - Math.PI / 2;
+    const d = (radarItems[i].val / 100) * rr;
+    const x = rx + Math.cos(a) * d;
+    const y = ry + Math.sin(a) * d;
+    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  }
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(242, 193, 78, 0.35)';
+  ctx.fill();
+  ctx.strokeStyle = '#f2c14e';
+  ctx.lineWidth = 2.5;
+  ctx.stroke();
+
+  // Trait Progress Bars on Right of Radar
+  const barX = 430, barY = 265, barW = 320;
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#f2c14e';
+  ctx.font = '800 12px system-ui';
+  ctx.fillText('CORE OB BEHAVIORAL SCORES', barX, barY - 14);
+
+  radarItems.forEach((t, idx) => {
+    const py = barY + idx * 36;
+    ctx.fillStyle = '#ffffff';
+    ctx.font = '600 13px system-ui';
+    ctx.fillText(t.name, barX, py + 10);
+
+    ctx.textAlign = 'right';
+    ctx.fillStyle = '#f2c14e';
+    ctx.font = '800 13px system-ui';
+    ctx.fillText(t.val + '%', barX + barW, py + 10);
+    ctx.textAlign = 'left';
+
+    ctx.fillStyle = '#20263f';
+    ctx.beginPath();
+    ctx.roundRect(barX, py + 16, barW, 8, 4);
+    ctx.fill();
+
+    const fillGr = ctx.createLinearGradient(barX, 0, barX + barW * (t.val / 100), 0);
+    fillGr.addColorStop(0, '#f2a93e');
+    fillGr.addColorStop(1, '#6be3a4');
+    ctx.fillStyle = fillGr;
+    ctx.beginPath();
+    ctx.roundRect(barX, py + 16, barW * (t.val / 100), 8, 4);
+    ctx.fill();
+  });
+
+  // Strengths and Growth Areas (Right side panel)
+  const pColX = 790, pColY = 265, pColW = 360;
+
+  // Strengths Box
+  ctx.fillStyle = 'rgba(20, 24, 45, 0.85)';
+  ctx.beginPath();
+  ctx.roundRect(pColX, pColY - 20, pColW, 110, 10);
+  ctx.fill();
+  ctx.strokeStyle = '#6be3a4';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  ctx.fillStyle = '#6be3a4';
+  ctx.font = '800 12px system-ui';
+  ctx.fillText('⭐ KEY EXECUTIVE STRENGTHS', pColX + 16, pColY);
+
+  ctx.fillStyle = '#e0e5f5';
+  ctx.font = '11.5px system-ui';
+  const str1 = ob.strengths[0].length > 60 ? ob.strengths[0].slice(0, 58) + '...' : ob.strengths[0];
+  const str2 = ob.strengths[1].length > 60 ? ob.strengths[1].slice(0, 58) + '...' : ob.strengths[1];
+  ctx.fillText('• ' + str1, pColX + 16, pColY + 28);
+  ctx.fillText('• ' + str2, pColX + 16, pColY + 54);
+
+  // Growth Areas Box
+  ctx.fillStyle = 'rgba(20, 24, 45, 0.85)';
+  ctx.beginPath();
+  ctx.roundRect(pColX, pColY + 110, pColW, 110, 10);
+  ctx.fill();
+  ctx.strokeStyle = '#f2c14e';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  ctx.fillStyle = '#f2c14e';
+  ctx.font = '800 12px system-ui';
+  ctx.fillText('🎯 PRIMARY GROWTH AREAS & BLIND SPOTS', pColX + 16, pColY + 130);
+
+  ctx.fillStyle = '#e0e5f5';
+  ctx.font = '11.5px system-ui';
+  const gro1 = ob.growthAreas[0].length > 60 ? ob.growthAreas[0].slice(0, 58) + '...' : ob.growthAreas[0];
+  const gro2 = ob.growthAreas[1].length > 60 ? ob.growthAreas[1].slice(0, 58) + '...' : ob.growthAreas[1];
+  ctx.fillText('• ' + gro1, pColX + 16, pColY + 158);
+  ctx.fillText('• ' + gro2, pColX + 16, pColY + 184);
+
+  // Bottom Simulation Summary Strip
+  ctx.fillStyle = 'rgba(16, 20, 36, 0.9)';
+  ctx.beginPath();
+  ctx.roundRect(50, 555, width - 100, 75, 12);
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(42, 48, 80, 0.8)';
+  ctx.stroke();
+
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#9aa1b8';
+  ctx.font = '700 11px system-ui';
+  ctx.fillText('THE HOT SEAT', 200, 582);
+  ctx.fillText('DESERT RALLY', 600, 582);
+  ctx.fillText('METHODOLOGICAL FOUNDATION', 990, 582);
+
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '800 14px system-ui';
+  const pText = P.poker ? `${P.poker.data.length} Hands · $${P.poker.chips} Chips` : 'Completed Module';
+  const rText = P.rally ? `${P.rally.data.tot}/${P.rally.data.all} Pts (${P.rally.data.pc}%)` : 'Completed Module';
+  ctx.fillText(pText, 200, 608);
+  ctx.fillText(rText, 600, 608);
+
+  ctx.fillStyle = '#6be3a4';
+  ctx.font = '700 12px system-ui';
+  ctx.fillText('COSO ERM · CRT · Transformational Leadership', 990, 608);
+
+  // Footer Citation
+  ctx.textAlign = 'center';
+  ctx.fillStyle = '#7a819c';
+  ctx.font = '11px system-ui';
+  ctx.fillText('The CFO Showdown Leadership Simulation · Measured via empirical Organizational Behavior research · All rights reserved', width / 2, 730);
+
+  // Download Trigger
+  offCanvas.toBlob(blob => {
+    if (!blob) return;
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.download = `CFO_Scorecard_${(P.nick || 'Executive').replace(/\s+/g, '_')}.png`;
+    link.href = url;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    showToast('✓ Executive Scorecard (PNG) downloaded successfully!', true);
+  }, 'image/png');
+}
+
+/**
+ * Share on LinkedIn with formatted post caption & link
+ */
+function shareOnLinkedIn() {
+  if (!P || !lastOBProfile) {
+    showToast('Scorecard is synthesizing... please wait a moment.', true);
+    return;
+  }
+  const ob = lastOBProfile;
+  const caption = `🏆 I just completed "The CFO Showdown" Executive Leadership Simulation!\n\n` +
+    `My Executive Archetype: ${ob.archetype}\n` +
+    `"${ob.tagline}"\n\n` +
+    `Key OB Leadership Traits:\n` +
+    `• Conviction: ${ob.traits.conv}%\n` +
+    `• Strategic Balance: ${ob.traits.strat}%\n` +
+    `• Emotional Awareness: ${ob.traits.eq}%\n` +
+    `• Agile Decision-Making: ${ob.traits.agility}%\n` +
+    `• Risk Appetite: ${ob.traits.risk}%\n\n` +
+    `Test your leadership judgement under financial volatility and crisis speed:\n` +
+    `${window.location.origin + window.location.pathname}\n\n` +
+    `#CFO #Leadership #OrganizationalBehavior #ExecutiveDevelopment #Finance`;
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(caption).then(() => {
+      showToast('✓ Scorecard caption copied to clipboard! Opening LinkedIn...', true);
+    }).catch(() => {
+      showToast('Opening LinkedIn to share your results...', true);
+    });
+  } else {
+    showToast('Opening LinkedIn to share your results...', true);
+  }
+
+  const shareUrl = 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(window.location.origin + window.location.pathname);
+  setTimeout(() => {
+    window.open(shareUrl, '_blank');
+  }, 450);
+}
+
+/**
+ * Optional Lead Capture Handler for full detailed PDF
+ */
+function handleLeadCapture(e) {
+  e.preventDefault();
+  const input = $('leadEmailInput');
+  const em = input.value.trim();
+  if (!em || !/^\S+@\S+\.\S+$/.test(em)) {
+    alert('Please enter a valid email address.');
+    return;
+  }
+  if (P) {
+    P.email = em;
+    try {
+      localStorage.setItem('cfo_active_player', JSON.stringify(P));
+      localStorage.setItem(KEY, JSON.stringify(DB));
+    } catch(err) {}
+  }
+  syncToCloud('LEAD_CAPTURED', { requestedEmail: em, archetype: lastOBProfile ? lastOBProfile.archetype : '' });
+  const fb = $('leadFeedback');
+  fb.textContent = `✓ Detailed OB Analysis PDF queued for delivery to ${em}!`;
+  fb.style.display = 'block';
+  input.disabled = true;
+  e.target.querySelector('button').disabled = true;
+}
+
 function finish(){
-  $('tn').textContent=P.nick;
-  const p=P.poker,r=P.rally;
-  $('u1').textContent=p?p.data.length+' hands ($'+p.chips+' chips)':'not played';
-  $('u2').textContent=r?r.data.tot+' / '+r.data.all+' pts ('+r.data.pc+'%)':'not played';
+  renderScorecard();
   go('s5');
-  
-  // Final Comprehensive Sync & Email
   syncToCloud('FINISHED');
-  if(p||r)dlExcel();
 }
 
 function newP(){
   P=null;
+  lastOBProfile=null;
   document.querySelectorAll('input:not([type=radio]),select').forEach(i=>i.value='');
   document.querySelectorAll('[name=st]').forEach(i=>i.checked=false);
+  if($('consentCb'))$('consentCb').checked=false;
+  if($('leadFeedback'))$('leadFeedback').style.display='none';
+  if($('leadEmailInput'))$('leadEmailInput').disabled=false;
+  const leadBtn=$('s5').querySelector('.lead-form button');
+  if(leadBtn)leadBtn.disabled=false;
   go('s1');
 }
 

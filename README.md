@@ -1,6 +1,6 @@
 # CFO Leadership Pulse - Live Google Sheets & Daily Summary Email Integration
 
-This system automatically records players who participate in the **CFO Leadership Pulse** assessment (**The Hot Seat / CFO Poker Table** and **CFO Desert Rally**) into a Google Spreadsheet, keeps their progress updated in real time across 4 dedicated tabs, and sends **one consolidated daily summary email at the end of the day** to **`mmsbf26001@stu.xim.edu.in`** (no annoying per-signup spam).
+This system automatically records players who participate in the **CFO Leadership Pulse** assessment (**The Hot Seat / CFO Poker Table** and **CFO Desert Rally**) into a Google Spreadsheet, keeps their progress updated in real time across 4 dedicated tabs, and sends **one consolidated daily summary email at the end of the day** to your configured research administrator email (no annoying per-signup spam).
 
 ---
 
@@ -19,7 +19,7 @@ This system automatically records players who participate in the **CFO Leadershi
    - Clicking redirects to the combined executive scorecard showing cross-game competencies, CFO readiness tier, and radar analysis.
 
 4. **One Consolidated Daily Email (End of Day):**
-   - Every night (between 11 PM and midnight, or trigger time), the script compiles all participants who played during the day, their scores, completion status, and a direct link to the Google Sheet, sending **one single executive summary email** to `mmsbf26001@stu.xim.edu.in`.
+   - Every night (between 11 PM and midnight, or trigger time), the script compiles all participants who played during the day, their scores, completion status, and a direct link to the Google Sheet, sending **one single executive summary email** to the configured research administrator email.
 
 ---
 
@@ -58,7 +58,7 @@ You do **not** need any paid database or third-party service. This uses Google's
 1. Go back to your **Apps Script editor**.
 2. In the toolbar function dropdown (next to "Debug" / "Run"), select **`setupDailyTrigger`**.
 3. Click **Run**.
-4. That's all! Google Apps Script will now automatically run every night (between 11 PM and midnight) to send one single summary email to `mmsbf26001@stu.xim.edu.in`.
+4. That's all! Google Apps Script will now automatically run every night (between 11 PM and midnight) to send one single summary email to the configured administrator email.
 5. *(Optional test)*: Select **`testDailySummaryEmail`** and click **Run** anytime to send an instant test summary email to your inbox.
 
 
@@ -128,7 +128,7 @@ Records every single raw event payload with timestamp for auditability.
 
 ## 📧 Consolidated Daily Summary Email Format
 
-Sent once daily at the end of the day to **`mmsbf26001@stu.xim.edu.in`**:
+Sent once daily at the end of the day to the configured administrator:
 - **Date & Assessment Headline**: Executive digest of the day's testing cohort.
 - **Key Metrics**: Total participants today, fully completed both games, and average performance.
 - **Roster Table**: Name, Email, Status, Hot Seat level & chips, Desert Rally title & score, and final completion status.

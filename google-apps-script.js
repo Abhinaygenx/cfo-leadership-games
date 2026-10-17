@@ -7,12 +7,12 @@
  * 2. "Poker_Responses": Exactly 1 row per player with questions as individual columns.
  * 3. "Rally_Responses": Exactly 1 row per player with all 15 questions as individual columns.
  * 4. "Event_Log": Chronological audit trail.
- * 5. Sends automatic scorecard email notifications to: mmsbf26001@stu.xim.edu.in
+ * 5. Sends automatic scorecard email notifications to configured administrator email
  * ==============================================================================
  */
 
-// Target email where updates will be sent
-const NOTIFICATION_EMAIL = "mmsbf26001@stu.xim.edu.in";
+// Target email where updates will be sent (can be configured in Script Properties or updated here)
+const NOTIFICATION_EMAIL = PropertiesService.getScriptProperties().getProperty("NOTIFICATION_EMAIL") || "cfo-research-lead@institution.edu";
 
 // 15 Exact Rally Questions for Column Headers
 const RALLY_QUESTIONS = [

@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
 <title>CFO Desert Rally</title>
 <style>
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--tx:#2b2118;--mu:#7a6650}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}
-body{margin:0;background:#f6e7c8;color:var(--tx);font-family:"Trebuchet MS",system-ui,sans-serif;display:flex;justify-content:center;min-height:100vh}
-#wrap{position:relative;margin-top:8px;border-radius:20px;box-shadow:0 14px 40px rgba(90,50,10,.35);height:min-content;border:4px solid #fff}
+body{margin:0;background:#f6e7c8;color:var(--tx);font-family:"Trebuchet MS",system-ui,sans-serif;display:flex;justify-content:center;min-height:100vh;overflow-x:hidden;-webkit-text-size-adjust:100%;touch-action:manipulation}
+#wrap{position:relative;margin:4px auto;border-radius:18px;box-shadow:0 10px 32px rgba(90,50,10,.35);height:min-content;border:3px solid #fff;max-width:100vw}
 #wrap.wide canvas{height:auto;width:min(calc(100vw - 16px),calc((100dvh - 24px)*16/9));max-width:none}#wrap.wide #in{max-width:640px}
-canvas{display:block;height:min(86dvh,680px);aspect-ratio:360/600;max-width:calc(100vw - 8px);border-radius:16px;touch-action:none;background:#7cc4f5}
-#ov{position:absolute;inset:0;background:#fff3d6;border-radius:16px;padding:16px;overflow-y:auto;display:flex;text-align:center}
+canvas{display:block;width:100%;max-width:min(calc(100vw - 8px),440px);height:auto;max-height:calc(100dvh - 8px);aspect-ratio:360/600;border-radius:14px;touch-action:none;background:#7cc4f5}
+#ov{position:absolute;inset:0;background:#fff3d6;border-radius:14px;padding:14px;overflow-y:auto;display:flex;text-align:center}
 #in{margin:auto;width:100%}
 h1{margin:0 0 4px;font-size:27px;color:#c2410c}h2{margin:4px 0;font-size:22px}
 p{color:var(--mu);font-size:13.5px;line-height:1.5;margin:6px 0}

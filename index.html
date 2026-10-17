@@ -479,6 +479,7 @@ const DEFAULT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbw97qit3HKxEda
 let ENDPOINT = localStorage.getItem('cfo_sheet_endpoint') || DEFAULT_ENDPOINT;
 
 const $=i=>document.getElementById(i);
+const v=i=>{const el=$(i);return el?el.value.trim():'';};
 let DB=[];
 try{
   DB=JSON.parse(localStorage.getItem(KEY)||'[]');
@@ -629,7 +630,7 @@ function quickGuestPlay(){
 }
 
 function chk(){
-  const v=i=>$(i).value.trim(),a=+v('ag');
+  const a=+v('ag');
   const consent=$('consentCb')?$('consentCb').checked:false;
   return {
     nk:!!v('nk'),
@@ -662,7 +663,7 @@ function upd(){
   }
   $('rdb').style.width=(n/4*100)+'%';
   $('rdt').textContent=n==4?'Seat ready ✓ press Start':'Seat ready: '+n+' of 4';
-  const v=i=>$(i).value.trim(),st=document.querySelector('[name=st]:checked');
+  const st=document.querySelector('[name=st]:checked');
   $('pcN').textContent=v('nk')||'YOUR NICKNAME';
   $('pcName').textContent=v('nm')||v('nk')||'Executive Candidate';
   $('pcSt').textContent=st?st.value:'Choose status';
@@ -678,64 +679,69 @@ function rnd(){
 
 function reg(e){
   e&&e.preventDefault&&e.preventDefault();
-  const v=i=>$(i).value.trim(),st=document.querySelector('[name=st]:checked'),a=+v('ag'),E={};
-  
-  if(!v('nk'))E.nk='Please choose a nickname (tap 🎲 for random).';
-  if(!v('gn'))E.gn='Please select an option for gender.';
-  if(!st)E.st='Please select your career stage.';
-  if(v('em')&&!/^\S+@\S+\.\S+$/.test(v('em')))E.em='Enter a valid email format, or leave empty.';
-  if(v('ag')&&!(a>=16&&a<=80))E.ag='Age must be between 16 and 80.';
-  if(!$('consentCb').checked)E.consent='Please check the research consent box to proceed.';
+  try {
+    const st=document.querySelector('[name=st]:checked'),a=+v('ag'),E={};
+    
+    if(!v('nk'))E.nk='Please choose a nickname (tap 🎲 for random).';
+    if(!v('gn'))E.gn='Please select an option for gender.';
+    if(!st)E.st='Please select your career stage.';
+    if(v('em')&&!/^\S+@\S+\.\S+$/.test(v('em')))E.em='Enter a valid email format, or leave empty.';
+    if(v('ag')&&!(a>=16&&a<=80))E.ag='Age must be between 16 and 80.';
+    if(!$('consentCb')||!$('consentCb').checked)E.consent='Please check the research consent box to proceed.';
 
-  document.querySelectorAll('.fd').forEach(d=>{
-    const m=E[d.dataset.f];
-    d.classList.toggle('bad',!!m);
-    d.querySelector('.fe').textContent=m||'';
-  });
-  if($('consentBox')){
-    $('consentBox').classList.toggle('bad',!!E.consent);
-    $('consentFe').textContent=E.consent||'';
-  }
-
-  const ks=Object.keys(E);
-  if(ks.length){
-    showToast(ks.length==1?E[ks[0]]:ks.length+' required fields need attention.');
-    const targetEl=ks[0]==='consent'?$('consentBox'):document.querySelector('.fd[data-f='+ks[0]+']');
-    if(targetEl){
-      targetEl.scrollIntoView({block:'center',behavior:'smooth'});
-      const i=targetEl.querySelector('input,select');
-      if(i&&i.type!='radio')i.focus();
+    document.querySelectorAll('.fd').forEach(d=>{
+      const m=E[d.dataset.f];
+      d.classList.toggle('bad',!!m);
+      d.querySelector('.fe').textContent=m||'';
+    });
+    if($('consentBox')){
+      $('consentBox').classList.toggle('bad',!!E.consent);
+      $('consentFe').textContent=E.consent||'';
     }
-    $('f').classList.remove('shake');void $('f').offsetWidth;$('f').classList.add('shake');
-    return;
+
+    const ks=Object.keys(E);
+    if(ks.length){
+      showToast(ks.length==1?E[ks[0]]:ks.length+' required fields need attention.');
+      const targetEl=ks[0]==='consent'?$('consentBox'):document.querySelector('.fd[data-f='+ks[0]+']');
+      if(targetEl){
+        targetEl.scrollIntoView({block:'center',behavior:'smooth'});
+        const i=targetEl.querySelector('input,select');
+        if(i&&i.type!='radio')i.focus();
+      }
+      $('f').classList.remove('shake');void $('f').offsetWidth;$('f').classList.add('shake');
+      return;
+    }
+
+    const finalNick = v('nk');
+    const finalName = v('nm') || finalNick;
+    const finalEmail = v('em') || 'anonymous@cfo-showdown.internal';
+    const finalAge = v('ag') ? a : 'N/A';
+
+    P={
+      id:'P'+Date.now().toString(36).toUpperCase(),
+      ts:new Date().toLocaleString(),
+      name:finalName,
+      email:finalEmail,
+      age:finalAge,
+      gender:v('gn')||'Undisclosed',
+      phone:v('ph')||'N/A',
+      status:st?st.value:'Working',
+      nick:finalNick,
+      poker:null,
+      rally:null
+    };
+    DB.push(P);
+    try{
+      localStorage.setItem(KEY,JSON.stringify(DB));
+      localStorage.setItem('cfo_active_player', JSON.stringify(P));
+    }catch(err){}
+    
+    syncToCloud('REGISTER');
+    go('s3');
+  } catch(err) {
+    console.error('Registration error:', err);
+    showToast('Registration notice: ' + (err.message || 'Please check form fields'));
   }
-
-  const finalNick = v('nk');
-  const finalName = v('nm') || finalNick;
-  const finalEmail = v('em') || 'anonymous@cfo-showdown.internal';
-  const finalAge = v('ag') ? a : 'N/A';
-
-  P={
-    id:'P'+Date.now().toString(36).toUpperCase(),
-    ts:new Date().toLocaleString(),
-    name:finalName,
-    email:finalEmail,
-    age:finalAge,
-    gender:v('gn'),
-    phone:v('ph')||'N/A',
-    status:st.value,
-    nick:finalNick,
-    poker:null,
-    rally:null
-  };
-  DB.push(P);
-  try{
-    localStorage.setItem(KEY,JSON.stringify(DB));
-    localStorage.setItem('cfo_active_player', JSON.stringify(P));
-  }catch(e){}
-  
-  syncToCloud('REGISTER');
-  go('s3');
 }
 
 function menu(){
